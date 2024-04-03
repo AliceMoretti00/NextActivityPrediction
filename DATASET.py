@@ -158,7 +158,6 @@ class TraceDataset(InMemoryDataset):
 
             data_list.append(data)  # crea una lista contenente gli elementi del dataset
 
-        # print("oh")
         # print(data_list)
         data, slices = self.collate(data_list)
 
@@ -259,17 +258,18 @@ def create_graph():
                 node_attributes = {}
                 node_attributes['idn'] = ids[s]
 
-                # Aggiungi attributi dalle colonne a partire dalla quarta colonna in poi 'e_v', 'node1', 'node2', 'name_event'
+                # Aggiungi attributi dalle colonne a partire dalla quarta
+                # colonna in poi 'e_v', 'node1', 'node2', 'name_event'
                 for col_name in sub_df.columns[3:]:
                     # Gestisco l'activity singolarmente, per assicurarmi che venga gestita sempre come una stringa
                     if col_name == 'name_event':
-                        valueActivity = row[col_name]
-                        node_attributes[col_name] = str(valueActivity)
+                        value_activity = row[col_name]
+                        node_attributes[col_name] = str(value_activity)
 
                         # salvo tutte le Activity, mi serve per dopo quando devo creare
                         # il relativo dizionario (vedi 'dictattr')
-                        if valueActivity not in attributes:
-                            attributes.append(valueActivity)
+                        if value_activity not in attributes:
+                            attributes.append(value_activity)
                     # Gestisco tutti gli altri attributi in modo parametrico, precedentemente ho fatto dei controlli
                     # se gli attributi sono categorici o numerici
                     else:
@@ -358,16 +358,18 @@ def create_sub_graph():
     for graph in ListGraph:  # ciclo per scorrere i grafi
         # print("graph")
         # print(graph)
-        SubGraph = nx.Graph(target_std="no",
-                            target_par='no')  # crea sottografo con attributi target_std e target_par inizializzati a "no"
+        SubGraph = nx.Graph(target_std="no", target_par='no')
+        event_num = max(list(graph.nodes()))
+        # crea sottografo con attributi target_std e target_par inizializzati a "no"
         for node in list(graph.nodes()):  # scorro i nodi del grafo corrente
             # si entra solo dopo i primi due nodi perchè sempre in input (mai predetti)
             if len(SubGraph.nodes()) > 1:  # changed min prefix length
-                # changed the next line                                    #controllo se il sottgrafo che si sta creando ha almeno due nodi all'interno
+                # changed the next line
+                # controllo se il sottgrafo che si sta creando ha almeno due nodi all'interno
 
-                ##INSERIMENTO DEL TARGET FEATURE //DTL
+                # INSERIMENTO DEL TARGET FEATURE //DTL
 
-                ##INSERIMENTO DEL ACTIVITY DA PREDIRRE
+                # INSERIMENTO DEL ACTIVITY DA PREDIRRE
 
                 #   **********************************************************
                 #   target = Days To Late
@@ -375,30 +377,32 @@ def create_sub_graph():
                 # #
 
                 target_t1 = graph.nodes[node]['name_event']
-                SubGraph.graph['target_std'] = graph.nodes[node][
-                    'name_event']  # put the target value there for the correct node.     #assegna come target_std al sottografo il nodo corrente
+                SubGraph.graph['target_std'] = graph.nodes[node]['name_event']
+                # put the target value there for the correct node.
+                # assegna come target_std al sottografo il nodo corrente
                 # nodevar=node
 
-                if SubGraph.graph[
-                    'target_std'] not in target_std:  # inserisce l'activity solo se non è già inserita nella lista target_std
+                if SubGraph.graph['target_std'] not in target_std:
+                    # inserisce l'activity solo se non è già inserita nella lista target_std
                     target_std.append(SubGraph.graph['target_std'])
                 # *********************************************
                 # NOT NEEDED! IT SHOULDN'T USE THIS IN TRAINING
 
-                SubGraph.graph['target_par'] = define_target(graph.copy(),
-                                                             SubGraph)  # assegna come target_par al sottografo il nodo corrente
+                SubGraph.graph['target_par'] = define_target(graph.copy(), SubGraph)
+                # assegna come target_par al sottografo il nodo corrente
 
                 # CHANGED!!!
                 SubGraph.graph['caseid'] = graph.nodes[node]['idn']
-                if SubGraph.graph[
-                    'target_par'] not in target_par:  # inserisce l'activity solo se non è già inserita nella lista target_par
+                if SubGraph.graph['target_par'] not in target_par:
+                    # inserisce l'activity solo se non è già inserita nella lista target_par
                     target_par.append(SubGraph.graph['target_par'])
 
-                ListSubGraph.append(
-                    SubGraph.copy().to_undirected())  # NOTA: la rete lavora sui grafo non diretti(questa cosa è modificabile in teoria)
+                ListSubGraph.append(SubGraph.copy().to_undirected())
+                # NOTA: la rete lavora sui grafo non diretti (questa cosa è modificabile in teoria)
                 # if graph.nodes[node]['attribute']!="END":
                 #     ListSubGraph.append(SubGraph.copy().to_undirected())
-                # bij mij wordt er wel een voorspelling gemaakt bij de laatste prefix, bij next activity is dat tot de een na laatste
+                # bij mij wordt er wel een voorspelling gemaakt bij de laatste prefix,
+                # bij next activity is dat tot de een na laatste
 
             attrs = graph.nodes[node]
             SubGraph.add_node(node, **attrs)

@@ -1,6 +1,5 @@
 import sys
 import config
-
 args = config.load()
 
 
@@ -13,12 +12,14 @@ def select_range_and_split(prefix_occurrences):
         print(f"Num. prefix : {k}, Occurences: {v}")
 
     try:
-        min_prefissi_selezionato = int(input(f"Inserisci il valore minimo del range di prefissi (min: {min_prefissi}, max: {max_prefissi}): "))
-        max_prefissi_selezionato = int(input(f"Inserisci il valore massimo del range di prefissi (min: {min_prefissi}, max: {max_prefissi}): "))
+        min_prefissi_selezionato = int(input(f"Inserisci il valore minimo del range di prefissi (min: {min_prefissi},"
+                                             f"max: {max_prefissi}): "))
+        max_prefissi_selezionato = int(input(f"Inserisci il valore massimo del range di prefissi (min: {min_prefissi},"
+                                             f"max: {max_prefissi}): "))
         percentuale_split = int(input("Inserisci la percentuale di split train/test: "))
         search_grid = input("Vuoi attivare la Search Grid? (Y/N): ").strip().lower() == "y"
-    except:
-        print('Valori non iseriti.')
+    except (Exception,):
+        print('Valori non inseriti.')
         sys.exit()
 
     if min_prefissi_selezionato > max_prefissi_selezionato:
@@ -30,14 +31,6 @@ def select_range_and_split(prefix_occurrences):
     print(f"Search Grid: {'Attivata' if search_grid else 'Disattivata'}")
 
     return min_prefissi_selezionato, max_prefissi_selezionato, percentuale_split, search_grid
-
-# prefix_occurrences = {1: 100, 2: 200, 3: 150}
-# min_prefissi, max_prefissi, percentuale_split, search_grid = select_range_and_split_cli(prefix_occurrences)
-# print("Valori selezionati:")
-# print(f"Min prefissi: {min_prefissi}")
-# print(f"Max prefissi: {max_prefissi}")
-# print(f"Percentuale di split train/test: {percentuale_split}%")
-# print(f"Search Grid: {'Attivata' if search_grid else 'Disattivata'}")
 
 
 def select_features(colonne_da_sel, colonne_eliminate, parametro_bool):
@@ -55,7 +48,8 @@ def select_features(colonne_da_sel, colonne_eliminate, parametro_bool):
     print("\nFeatures sconsigliate (per mancanza dati):")
     for i, col in enumerate(colonne_eliminate):
         print(f"{i}. {col}")
-    selezione_elim = input("Inserisci gli indici delle colonne eliminate da selezionare, separati da virgola (es. 0,1): ")
+    selezione_elim = input("Inserisci gli indici delle colonne eliminate da selezionare,"
+                           "separati da virgola (es. 0,1): ")
     colonne_selezionate_elim = [colonne_eliminate[int(i)] for i in selezione_elim.split(',') if i.isdigit()]
 
     print("\nScegli un'opzione:")
@@ -79,10 +73,6 @@ def select_features(colonne_da_sel, colonne_eliminate, parametro_bool):
 
     return colonne_selezionate, non_selezionate, opzione_scelta, train_rete
 
-# Esempio di utilizzo
-# colonne_da_sel, colonne_eliminate, parametro_bool = ['col1', 'col2', 'col3'], ['col4', 'col5'], True
-# colonne_selezionate, non_selezionate, opzione_scelta, train_rete = SimpleCli(colonne_da_sel, colonne_eliminate, parametro_bool)
-
 
 def select_dataset_paths():
     dataset_path = input("Inserisci il percorso del file del dataset pre-elaborato (complete_par.pt): ")
@@ -103,5 +93,3 @@ def select_dataset_paths():
     print(f"Percorso file target_std.txt selezionato: {target_std}")
 
     return dataset_path, target_par, target_std
-
-# dataset_path, target_par, target_std = select_paths_dataset_cli()

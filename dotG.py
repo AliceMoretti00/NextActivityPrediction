@@ -14,6 +14,28 @@ from sklearn.preprocessing import MinMaxScaler
 
 args = load()
 
+"""
+Ottiene tutti gli attributi degli eventi dal log.
+
+Questa funzione prende un log di eventi e restituisce un insieme di tutti gli attributi presenti
+negli eventi del log.
+
+Args:
+    log (list): Una lista di tracce di eventi. Ogni traccia è rappresentata come una lista di eventi,
+                dove ogni evento è un dizionario che rappresenta gli attributi dell'evento.
+
+Returns:
+    set: Un insieme di tutti gli attributi presenti negli eventi del log.
+
+Examples:
+    >>> log = [
+    ...     [{'timestamp': '2022-01-01', 'activity': 'Start'}, {'timestamp': '2022-01-02', 'activity': 'End'}],
+    ...     [{'timestamp': '2022-01-03', 'activity': 'Start'}, {'timestamp': '2022-01-04', 'activity': 'End'}]
+    ... ]
+    >>> get_all_event_attributes_from_log(log)
+    {'timestamp', 'activity'}
+"""
+
 
 # Ottiene tutti gli attributi degli eventi dal log
 def get_all_event_attributes_from_log(log):
@@ -24,6 +46,29 @@ def get_all_event_attributes_from_log(log):
     if xes.DEFAULT_TRANSITION_KEY in all_attributes:
         all_attributes.remove(xes.DEFAULT_TRANSITION_KEY)
     return all_attributes
+
+
+"""
+Ottiene tutti gli attributi delle tracce dal log.
+
+Questa funzione prende un log di eventi e restituisce un insieme di tutti gli attributi presenti
+nelle tracce del log.
+
+Args:
+    log (list): Una lista di tracce di eventi. Ogni traccia è rappresentata come un oggetto Trace
+                che potrebbe contenere attributi.
+
+Returns:
+    set: Un insieme di tutti gli attributi presenti nelle tracce del log.
+
+Examples:
+    >>> log = [
+    ...     Trace(attributes={'caseid': '1', 'activity': 'Start'}),
+    ...     Trace(attributes={'caseid': '2', 'activity': 'Start'})
+    ... ]
+    >>> get_all_trace_attributes_from_log(log)
+    {'caseid', 'activity'}
+"""
 
 
 # Ottiene tutti gli attributi delle tracce dal log
@@ -57,7 +102,7 @@ def v_case(wfile, word, index, log, lista_param_tracce, lista_param_eventi):
         if tmp == log[index][event_index]['concept:name'] and word[1] == str(count):
             params_tracks = ""
             for elem in lista_param_tracce:
-                params_tracks += str(log[index].attributes[elem]) + " "
+                params_tracks += f'{log[index].attributes[elem]} '
             params_tracks = params_tracks.strip()
             # ******************************************************************************************
             #
@@ -76,19 +121,20 @@ def v_case(wfile, word, index, log, lista_param_tracce, lista_param_eventi):
                 try:
                     s = str(log[index][event_index][elem])
                     s = s.replace(" ", "")  # changed this to make one word of concept:name
-                    params_elems += s + " "
+                    params_elems += f'{s} '
                     # se non presente viene impostato il valore -1
                 except KeyError:
                     params_elems += "-1" + " "
             params_elems = params_elems.strip()
-            a = (word[0] + " " + word[1] + " " + " " + params_elems + " " + params_tracks + "\n")
+            a = f'{word[0]} {word[1]}  {params_elems} {params_tracks}\n'
+
             write_function(wfile, a)
         count += 1
 
 
 def e_case(wfile, word):
-    a = word[0] + " " + word[1] + " " + word[2] + " " + "".join(
-        word[3:]) + "\n"  # changed this to make one word of concept:name
+    # changed this to make one word of concept:name
+    a = f'{word[0]} {word[1]} {word[2]} {"".join(word[3:])}\n'
     write_function(wfile, a)
 
 
@@ -210,7 +256,7 @@ def get_g_dataframe(filename=None):
     # append the 4 file.g in only one file "merged.g"
     filenames = []
     for i in range(len(logs)):
-        filenames.append(join(path_w,  f'{i}.g'))
+        filenames.append(join(path_w, f'{i}.g'))
 
     # Open merged.g in write mode
     with open(join(path_w, 'merged.g'), 'w') as outfile:
@@ -252,9 +298,35 @@ def get_g_dataframe(filename=None):
         ....
         e 1 2 ASUBMITTED__APARTLYSUBMITTED
         ...
-        
+
     '''
 
+    """
+    Rinomina e unisce gli attributi relativi agli eventi e alle tracce per evitare ambiguità.
+
+    Questo frammento di codice confronta gli elementi nelle liste `lista_param_eventi` e
+    `lista_param_tracce`. Se trova elementi con lo stesso nome in entrambe le liste,
+    aggiunge il suffisso "_event" agli elementi di `lista_param_eventi` e "_track" agli
+    elementi di `lista_param_tracce`. Dopodiché, unisce queste liste in una singola lista
+    `names2`, che include anche i nomi base ["e_v", "node1", "node2"]. Infine, pulisce i
+    nomi degli attributi in `names2` rimuovendo eventuali prefissi identificati dal carattere ":".
+
+    Parameters
+    ----------
+    lista_param_eventi : list of str
+        La lista degli attributi relativi agli eventi.
+    lista_param_tracce : list of str
+        La lista degli attributi relativi alle tracce.
+    e_v_column : int, optional
+        Un valore iniziale per la colonna `e_v`, predefinito a 0.
+
+    Returns
+    -------
+    names2 : list of str
+        Una lista unificata che include i nomi degli attributi per eventi e tracce, con
+        i necessari suffissi aggiunti per evitare ambiguità, e i nomi base ["e_v", "node1", "node2"].
+
+    """
     e_v_column = 0
 
     # Aggiunge _event agli attributi relativi agli attributi e track agli attributi relativi alle tracce
@@ -271,14 +343,49 @@ def get_g_dataframe(filename=None):
     for i in range(len(names2)):
         names2[i] = names2[i].split(':')[-1]
 
+    """
+    Legge e prepara un DataFrame da un file .g, effettuando la conversione e manipolazione dei timestamp.
+
+    Questo frammento di codice esegue la lettura di un file .g specificato dal percorso `path_read`, selezionando
+    solo le colonne definite in `names2`. Successivamente, modifica il formato dei timestamp, li sposta in una nuova
+    colonna 'finish' e prepara un DataFrame aggiuntivo per le operazioni di feature engineering. Infine, gestisce i
+    valori mancanti e prepara il DataFrame per l'analisi.
+
+    Parameters
+    ----------
+    path_read : str
+        Il percorso del file da leggere.
+    names2 : list of str
+        Nomi delle colonne da selezionare durante la lettura del file.
+
+    Steps
+    -----
+    1. Lettura del file: Utilizza `pd.read_csv` per leggere il file, specificando separatori, nomi delle colonne
+       e tipi di dati.
+    2. Manipolazione dei timestamp: Converte i timestamp in formato datetime con fuso orario UTC e sposta i valori
+       in una nuova colonna 'finish'. Rimuove la colonna 'timestamp' originale.
+    3. Preparazione del DataFrame `g_dataframe`: Inizializza `g_dataframe` con le stesse colonne di `df` e riempie
+       con i dati di `df`, gestendo i valori NaN.
+    4. Gestione della colonna 'start': Crea e manipola una colonna 'start' basata sui valori di 'finish' e condizioni
+       specifiche.
+    5. Pulizia e finalizzazione: Rimuove i DataFrame temporanei e gestisce i valori mancanti e non validi nelle colonne
+       'start' e 'finish'.
+    6. Logging: Scrive i log delle operazioni svolte in un file di testo per monitorare l'avanzamento del processo.
+
+    """
     df = pd.read_csv(path_read, sep=" ", names=names2, dtype={
-        'name_track': str})  # accede alle variabili lista_param_eventi e lista_param_tracce dello script add_info_g_file.py ////////////// legge il .g file prendendo solo le colonne presenti nella variabile names2
+        'name_track': str})
+    # accede alle variabili lista_param_eventi e lista_param_tracce dello script
+    # add_info_g_file.py
+    # legge il .g file prendendo solo le colonne presenti nella variabile names2
     df.timestamp = df.timestamp.apply(lambda x: str(x)[:18])
 
     df['timestamp'] = pd.to_datetime(df['timestamp'], format='%Y-%m-%d%H:%M:%S',
                                      utc=True)  # add utc to be sure (,utc=True)
 
-    tmp = df.timestamp  # Salvo in una variabile di appoggio tutti i timestamp per inserirli in una nuova colonna 'finish'
+    tmp = df.timestamp
+    # Salvo in una variabile di appoggio tutti i timestamp per inserirli
+    # in una nuova colonna 'finish'
     df['finish'] = tmp
     df.drop(['timestamp'], axis=1, inplace=True)
 
@@ -323,11 +430,11 @@ def get_g_dataframe(filename=None):
     print_file.flush()
 
     '''
-    # Calcola la colonna 'norm_time' in base al giorno della settimana e all'ora
-    
-    #Infine, dividiamo il tempo totale in minuti per 10080, che è il numero totale di minuti in una settimana (7 giorni * 24 ore * 60 minuti).
-    #Questa divisione normalizza il tempo in modo che il risultato sia compreso tra 0 (inizio della settimana) e 1 (fine della settimana)
-    
+    Calcola la colonna 'norm_time' in base al giorno della settimana e all'ora
+    Infine, dividiamo il tempo totale in minuti per 10080,
+    che è il numero totale di minuti in una settimana (7 giorni * 24 ore * 60 minuti).
+    Questa divisione normalizza il tempo in modo che il risultato sia compreso tra
+    0 (inizio della settimana) e 1 (fine della settimana)
     '''
     g_dataframe['norm_time'] = ((g_dataframe['finish'].dt.dayofweek * 24 * 60) + (
             (g_dataframe['finish'].dt.hour * 60) + g_dataframe['finish'].dt.minute)) / 10080
@@ -369,6 +476,8 @@ def get_g_dataframe(filename=None):
     #
     #
     # # *********************************************************************************************
+    # QUESTO TARGETFRAME NON LO UTILIZZO IN QUANTO NON FACCIO REGRESSIONE E NON HO BISOGNO DI CALCOLARMI IL TARGET
+    # CON IL DAYS TO LATE.
 
     targetframe = convert_xes_to_csv(log_total, csv_path)
     col_name = 'Case ID'
@@ -377,6 +486,7 @@ def get_g_dataframe(filename=None):
     else:
         print(f"La colonna {col_name} non esiste.")
 
+    # pulizia di tutte le colonne con il numero di 0 > 60/70% or Nan > 5% eliminare
     col_eliminate = []
     del_col_file = open(join(register, 'deleted_columns.txt'), 'w')
 
@@ -485,6 +595,34 @@ def get_g_dataframe(filename=None):
     idxss = list(np.where(~g_dataframe['name_track'].isnull()))[
         0]  # Trova gli indici delle righe in cui la colonna 'name_track' di g_dataframe non è nulla.
 
+    """
+    Processa e aggiunge colonne selezionate da un dataframe di origine a un dataframe di destinazione,
+    distinguendo tra attributi categorici e numerici. Gli attributi numerici vengono normalizzati prima
+    dell'aggiunta. 
+
+    Parameters
+    ----------
+    selected_columns : list of str
+        Lista dei nomi delle colonne selezionate da processare e aggiungere al dataframe di destinazione.
+    targetframe : pandas.DataFrame
+        Il dataframe di origine da cui vengono prelevati i valori delle colonne selezionate.
+    g_dataframe : pandas.DataFrame
+        Il dataframe di destinazione a cui vengono aggiunti i valori delle colonne selezionate.
+    sizes : list of int
+        Lista che definisce il numero di volte per cui ciascun valore nella colonna selezionata deve essere ripetuto.
+    print_file : _io.TextIOWrapper
+        File aperto in modalità di scrittura su cui vengono scritti i log delle operazioni eseguite.
+    idxss : pandas.Index
+        L'indice che definisce l'ordine e la posizione dei valori da inserire nel dataframe di destinazione.
+
+    Notes
+    -----
+    Gli attributi categorici e numerici vengono identificati tramite tentativo di conversione in float.
+    Gli attributi che non possono essere convertiti vengono considerati categorici e aggiunti alla lista
+    `attCategorici`, mentre quelli convertibili sono considerati numerici e aggiunti alla lista `attNumerici`.
+
+    """
+
     att_categorici = []
     att_numerici = []
 
@@ -497,15 +635,15 @@ def get_g_dataframe(filename=None):
         arr = pd.Series(arr)
 
         unique = targetframe[i].unique()
-        flagString = False
+        flag_string = False
 
         for elem in unique:
             try:
                 elem.astype(float)
             except:
-                flagString = True
+                flag_string = True
 
-        if flagString:
+        if flag_string:
             att_categorici.append(i)
         else:
             att_numerici.append(i)
@@ -527,9 +665,8 @@ def get_g_dataframe(filename=None):
     print_file.write('Start with normalizing andreas features...\n')
     print_file.flush()
 
-    for i in ['norm_time', 'trace_time',
-              'prev_event_time']:  # Normalizzazione delle feature norm_time - trace_time - prev_event_time
-
+    for i in ['norm_time', 'trace_time', 'prev_event_time']:
+        # Normalizzazione delle feature norm_time - trace_time - prev_event_time
         g_dataframe[i] = g_dataframe[i].div(g_dataframe[i].max()).round(15)
 
     # casting time column as string
@@ -548,7 +685,6 @@ def get_g_dataframe(filename=None):
 
     print('start writing the complete.g file ...')
 
-    # changed !!
     print_file.write('Start writing the complete.g file...\n')
     print_file.flush()
     g_dataframe[list(g_dataframe.columns)] = g_dataframe[list(g_dataframe.columns)].astype(str)
