@@ -13,6 +13,7 @@ from graphviz import Digraph
 import sys
 import time
 import csv
+import os
 from os.path import join, exists
 from config import INPUT_PATH, clean_directories, load
 clean_directories()
@@ -575,8 +576,8 @@ def BIG(tr_start=0, tr_end=None, view=False, filename=None, sort_labels=False):
     net.places.add(p_end)
     net_path = join(net_file, 'dgcnn_log_sample_net_startend.pnml')
     write_pnml(net, initial_marking, final_marking, net_path)
-    
-    splits = log_path.split('/')
+
+    splits = os.path.split(log_path)
     name = splits[-1].split(".")[0]
 
     streaming_ev_object = xes_importer.apply(log_path, variant=xes_importer.Variants.XES_TRACE_STREAM)  # file xes
