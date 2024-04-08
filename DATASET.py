@@ -522,10 +522,10 @@ def draw(graph):
 if __name__ == "__main__":
 
     file_name, file_id = 'complete', '0'
-    g_dataframe, att_numerici, att_categorici = get_g_dataframe()
+    g_dataframe, att_numerici, att_categorici, one_hot_dictionaries = get_g_dataframe()
     ids = []
     # Creazione e salvataggio dei dizionari per il One-Hot Encoding
-    one_hot_dictionaries = {}
+    # one_hot_dictionaries = {}
     prefix = []
 
     G = TraceDataset()

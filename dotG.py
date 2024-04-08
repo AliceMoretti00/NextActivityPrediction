@@ -636,6 +636,7 @@ def get_g_dataframe(filename=None):
 
     att_categorici = []
     att_numerici = []
+    encoding_dict = {}
 
     # Set values, sizes, and array per tutte le colonne selezionate
     for i in selected_columns:
@@ -662,6 +663,7 @@ def get_g_dataframe(filename=None):
 
         if flag_string:
             att_categorici.append(i)
+            encoding_dict.update({i:unique})
         else:
             att_numerici.append(i)
 
@@ -718,4 +720,4 @@ def get_g_dataframe(filename=None):
 
     g_dataframe['e_v'] = g_dataframe['e_v'].replace('\nXP', 'XP')
     g_dataframe = g_dataframe.iloc[:, :-1]
-    return g_dataframe, att_numerici, att_categorici
+    return g_dataframe, att_numerici, att_categorici, encoding_dict
