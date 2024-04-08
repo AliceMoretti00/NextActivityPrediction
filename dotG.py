@@ -11,6 +11,7 @@ import pandas as pd
 import numpy as np
 from cli_functions import select_features
 from sklearn.preprocessing import MinMaxScaler
+import os
 
 args = load()
 
@@ -142,6 +143,10 @@ def add_info(path_w, path_r, log, lista_param_tracce, lista_param_eventi):
     # When we find 'XP' we increase the trace index by 1.
     # Each trace in .g start with 'XP' --> for the firs time we need to set trace_index= -1
     trace_index = -1
+    try:
+        os.remove(path_w)
+    except:
+        print(path_w + ' non rimosso')
     w = open(path_w, "a")  # file in which we append trace + additionals information
     r = open(path_r, "r")  # file .g to which informations is to be added
 
@@ -159,6 +164,9 @@ def add_info(path_w, path_r, log, lista_param_tracce, lista_param_eventi):
             # if the first element of list is 'v' --> the line refers to a node (event) -->
             # we have to add additional informations
             if riga[0] == 'v':
+                print(trace_index)
+                if trace_index==13087:
+                    print('sono qui')
                 v_case(w, riga, trace_index, log, lista_param_tracce, lista_param_eventi)
             elif riga[0] == 'e':
                 # if the first element of list is 'e' --> the line refers to an edge --> no additional informations.
@@ -225,7 +233,7 @@ def get_g_dataframe(filename=None):
         e 1 2 ASUBMITTED__APARTLYSUBMITTED
     '''
 
-    if filename is None:
+    if filename is None:     # filename is the parameter of the function
         name_xes = args.xes_name
         print(f'Filename xes di default: {"name_xes"}')
     else:
@@ -398,12 +406,12 @@ def get_g_dataframe(filename=None):
         columns=list(df.columns))  # viene creato il g_dataframe con stesso numero/nome delle colonne df
     g_dataframe.loc[0] = np.array(np.nan * len(g_dataframe.columns))
     g_dataframe = pd.concat((g_dataframe, df), ignore_index=True)
-    g_dataframe['e_v'] = g_dataframe['e_v'].fillna('')
+    g_dataframe['e_v'] = g_dataframe['e_v'].fillna('')  # come g_dataframe è uguale a df ma ha una riga nan all'inizio e uno spazio che separa ogni traccia
 
     g_dataframe = g_dataframe[:-1]
     df_shift = pd.DataFrame(columns=list(df.columns))
     df_shift.loc[0] = np.array(np.nan * len(df_shift.columns))
-    df_shift.loc[1] = np.array(np.nan * len(df_shift.columns))
+    df_shift.loc[1] = np.array(np.nan * len(df_shift.columns))  # riempe le prime due righe del df con tutti nan
     df_shift = pd.concat((df_shift, df), ignore_index=True)
     df_shift['e_v'] = df_shift['e_v'].fillna('')
     df_shift = df_shift[:-1]
@@ -576,6 +584,7 @@ def get_g_dataframe(filename=None):
 
         print_file.write('Set values, sizes and array for all features + target and add to g_dataframe...\n')
         print_file.flush()
+
         sizes = np.array(g_dataframe.groupby('name_track', sort=False, as_index=False).size()['size'])
         idxss = list(np.where(~g_dataframe['name_track'].isnull()))[0]
 
@@ -590,6 +599,8 @@ def get_g_dataframe(filename=None):
 
     print_file.write('Set values, sizes and array for all features + target and add to g_dataframe...\n')
     print_file.flush()
+
+    # crea una lista di conteggi di nodi per ogni grafo
     sizes = np.array(g_dataframe.groupby('name_track', sort=False, as_index=False).size()['size'])
 
     idxss = list(np.where(~g_dataframe['name_track'].isnull()))[
@@ -630,9 +641,15 @@ def get_g_dataframe(filename=None):
     for i in selected_columns:
         print_file.write(f'Aggiungi {i} a g_dataframe...\n')
         print_file.flush()
-        arr = sum([[s] * n for s, n in zip(targetframe[i], sizes)], [])
-        g_dataframe[i] = [np.nan] * len(g_dataframe)
-        arr = pd.Series(arr)
+
+        for idx, element in zip(idxss, targetframe[i]):
+            g_dataframe.loc[idx, str(i)] = element
+
+        # If you want to fill the rest of the DataFrame with NaNs in the 'ciao' column
+
+        #arr = sum([[s] * n for s, n in zip(targetframe[i], idxss)], [])
+        #g_dataframe[i] = [np.nan] * len(g_dataframe)
+        #arr = pd.Series(arr)
 
         unique = targetframe[i].unique()
         flag_string = False
@@ -656,9 +673,6 @@ def get_g_dataframe(filename=None):
             arr_normalized = scaler.fit_transform(arr.values.reshape(-1, 1))
             # Crea una Pandas Series dai dati normalizzati
             arr = pd.Series(arr_normalized.flatten())
-
-        arr.index = idxss
-        g_dataframe[i] = arr
 
     gc.collect()
 
