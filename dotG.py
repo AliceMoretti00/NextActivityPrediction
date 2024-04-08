@@ -165,7 +165,7 @@ def add_info(path_w, path_r, log, lista_param_tracce, lista_param_eventi):
             # we have to add additional informations
             if riga[0] == 'v':
                 print(trace_index)
-                if trace_index==13087:
+                if trace_index == 13087:
                     print('sono qui')
                 v_case(w, riga, trace_index, log, lista_param_tracce, lista_param_eventi)
             elif riga[0] == 'e':
@@ -233,7 +233,7 @@ def get_g_dataframe(filename=None):
         e 1 2 ASUBMITTED__APARTLYSUBMITTED
     '''
 
-    if filename is None:     # filename is the parameter of the function
+    if filename is None:  # filename is the parameter of the function
         name_xes = args.xes_name
         print(f'Filename xes di default: {"name_xes"}')
     else:
@@ -406,7 +406,8 @@ def get_g_dataframe(filename=None):
         columns=list(df.columns))  # viene creato il g_dataframe con stesso numero/nome delle colonne df
     g_dataframe.loc[0] = np.array(np.nan * len(g_dataframe.columns))
     g_dataframe = pd.concat((g_dataframe, df), ignore_index=True)
-    g_dataframe['e_v'] = g_dataframe['e_v'].fillna('')  # come g_dataframe è uguale a df ma ha una riga nan all'inizio e uno spazio che separa ogni traccia
+    g_dataframe['e_v'] = g_dataframe['e_v'].fillna(
+        '')  # come g_dataframe è uguale a df ma ha una riga nan all'inizio e uno spazio che separa ogni traccia
 
     g_dataframe = g_dataframe[:-1]
     df_shift = pd.DataFrame(columns=list(df.columns))
@@ -648,9 +649,9 @@ def get_g_dataframe(filename=None):
 
         # If you want to fill the rest of the DataFrame with NaNs in the 'ciao' column
 
-        #arr = sum([[s] * n for s, n in zip(targetframe[i], idxss)], [])
-        #g_dataframe[i] = [np.nan] * len(g_dataframe)
-        #arr = pd.Series(arr)
+        # arr = sum([[s] * n for s, n in zip(targetframe[i], idxss)], [])
+        # g_dataframe[i] = [np.nan] * len(g_dataframe)
+        # arr = pd.Series(arr)
 
         unique = targetframe[i].unique()
         flag_string = False
@@ -663,7 +664,7 @@ def get_g_dataframe(filename=None):
 
         if flag_string:
             att_categorici.append(i)
-            encoding_dict.update({i:unique})
+            encoding_dict.update({i:{i: unique[i] for i in range(unique.shape[0])}})
         else:
             att_numerici.append(i)
 
