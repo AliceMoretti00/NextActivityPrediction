@@ -11,6 +11,9 @@ from dotG import get_g_dataframe
 from os.path import join
 import string
 
+from config import clean_output_directories
+clean_output_directories()
+
 file_name = None
 file_id = None
 g_dataframe = None

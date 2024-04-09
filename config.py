@@ -67,6 +67,32 @@ def clean_directories():
         makedirs(PREFIX_PATH)
 
 
+def clean_output_directories():
+    output_to_clean = ['dataset']
+    for to_clean in output_to_clean:
+        complete_path = join(OUTPUT_PATH, to_clean)
+        if exists(complete_path):
+            rmtree(complete_path)
+
+    output_to_create = ['petri_nets', 'Pre-cage',
+                        join('dataset', 'processed'),
+                        join('checkpoints', 'best_test'),
+                        join('checkpoints', 'best_train'),
+                        join('checkpoints', 'immagini', 'best_test'),
+                        join('checkpoints', 'immagini', 'best_train'),
+                        join('checkpoints', 'immagini', 'cm_epoch'),
+                        'register'
+                        ]
+    for to_create in output_to_create:
+        complete_path = join(OUTPUT_PATH, to_create)
+        if not exists(complete_path):
+            makedirs(complete_path)
+
+        if exists(PREFIX_PATH):
+            rmtree(PREFIX_PATH)
+        makedirs(PREFIX_PATH)
+
+
 def load():
     parser = ArgumentParser()
 
