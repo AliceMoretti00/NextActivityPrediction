@@ -188,11 +188,11 @@ def sanitize_filename(filename, replacement="_"):
     return sanitized_filename
 
     # ciclo tutte le variabili categoriche per creare il dizionario del OHE e salvo ogni variabile in un file.txt
-    # for col_name in att_categorici:
-    #     unique_values = g_dataframe[col_name].unique()
-    #     value_to_index = {value: index for index, value in enumerate(unique_values) if value != ''}
-    #     one_hot_dictionaries[col_name] = value_to_index
-    #     col_name = sanitize_filename(col_name)
+    for col_name in att_categorici:
+        unique_values = g_dataframe[col_name].unique()
+        value_to_index = {value: index for index, value in enumerate(unique_values) if value != ''}
+        one_hot_dictionaries[col_name] = value_to_index
+        col_name = sanitize_filename(col_name)
 
     # Salva anche i valori unici se necessario
     # with open(f"{OUTPUT_DS_PATH}/{col_name}_unique.txt", "w") as file:

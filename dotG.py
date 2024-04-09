@@ -664,7 +664,7 @@ def get_g_dataframe(filename=None):
 
         if flag_string:
             att_categorici.append(i)
-            encoding_dict.update({i:{i: unique[i] for i in range(unique.shape[0])}})
+            encoding_dict.update({i: {unique[j]: j+1 for j in range(len(unique))}})
         else:
             att_numerici.append(i)
 
