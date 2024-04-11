@@ -3,10 +3,17 @@ from os.path import join, abspath, exists, dirname
 from shutil import rmtree
 from argparse import ArgumentParser
 
+LOGS_WITH_NO_START_END = ['BPI12']
+
 BASE_PATH = dirname((abspath(__file__)))
 INPUT_PATH = join(BASE_PATH, 'Input')
+INPUT_XES_PATH = join(INPUT_PATH, 'xes')
+INPUT_G_PATH = join(INPUT_PATH, 'g')
+
 OUTPUT_PATH = join(BASE_PATH, 'Output')
 OUTPUT_DS_PATH = join(OUTPUT_PATH, 'dataset')
+OUTPUT_PN_PATH = join(OUTPUT_PATH, 'petri_nets')
+
 PREFIX_PATH = join(BASE_PATH, 'Prefix')
 
 # to create
@@ -23,18 +30,11 @@ CK_BEST_TRAIN_PATH = join(CHECKPOINT_RETE_PATH, 'best_train')
 CK_BEST_TEST_PATH = join(CHECKPOINT_RETE_PATH, 'best_test')
 F1_SCORE_PATH = join(BASE_PATH, 'AndamentoF1Score')
 
-bla = [LOG_PATH, CSV_PATH, IMG_PATH, IMMAGINI_PATH, IMG_CM_EPOCH,
-       IMG_BEST_TEST_PATH, IMG_BEST_TRAIN_PATH, CM_PATH, CHECKPOINT_RETE_PATH,
-       CK_BEST_TRAIN_PATH, CK_BEST_TEST_PATH, F1_SCORE_PATH]
-for complete_path in bla:
-    if exists(complete_path):
-        rmtree(complete_path)
-    makedirs(complete_path)
-
 
 # pulizia delle directory
 def clean_directories():
-    input_to_clean = ['csv', 'g', 'testg']
+    # input_to_clean = ['csv', 'g', 'testg']
+    input_to_clean = ['csv', 'g']
     # recreate input folders
     for to_clean in input_to_clean:
         complete_path = join(INPUT_PATH, to_clean)
@@ -65,6 +65,14 @@ def clean_directories():
         if exists(PREFIX_PATH):
             rmtree(PREFIX_PATH)
         makedirs(PREFIX_PATH)
+
+    bla = [LOG_PATH, CSV_PATH, IMG_PATH, IMMAGINI_PATH, IMG_CM_EPOCH,
+           IMG_BEST_TEST_PATH, IMG_BEST_TRAIN_PATH, CM_PATH, CHECKPOINT_RETE_PATH,
+           CK_BEST_TRAIN_PATH, CK_BEST_TEST_PATH, F1_SCORE_PATH]
+    for complete_path in bla:
+        if exists(complete_path):
+            rmtree(complete_path)
+        makedirs(complete_path)
 
 
 def clean_output_directories():
@@ -99,8 +107,8 @@ def load():
     parser.add_argument('--attr_list',
                         default=['bu', 'nrchanges', 'ttmotif', 'plant', 'matgroup', 'polines', 'vendor', 'item'])
     parser.add_argument('--data_dir', default=join(OUTPUT_PATH, 'dataset'))
-    parser.add_argument('--csv_name', default=join(INPUT_PATH, 'csv', 'BPI_Challenge_2012.csv'))
-    parser.add_argument('--xes_name',  default=join(INPUT_PATH, 'xes', 'BPI_Challenge_2012.xes'))
+    parser.add_argument('--csv_name', default='testCsv.csv')
+    parser.add_argument('--xes_name',  default='BPI2012_SE.xes')
     parser.add_argument('--net_name', default=join(OUTPUT_PATH, 'petri_nets'))
     parser.add_argument('--checkpoint_dir', default=join(OUTPUT_PATH, 'checkpoints'))
     parser.add_argument('--dataset', default='p2p')
@@ -128,3 +136,6 @@ def load():
 
     args = parser.parse_args()
     return args
+
+
+# clean_directories()

@@ -1,23 +1,66 @@
-from pm4py import convert_to_dataframe, read_pnml, write_pnml, read_xes
+from pm4py import convert_to_dataframe, write_pnml, read_xes, write_xes
 from pm4py.algo.discovery.inductive import algorithm as inductive_miner
-# from pm4py.visualization.petrinet import visualizer as pn_visualizer
+from pm4py.visualization.petri_net.common import visualize as pn_visualize
 from pm4py.objects.petri_net.obj import PetriNet
+from pm4py.objects.log.util import artificial
 from pm4py.algo.conformance.alignments.petri_net import algorithm as alignments
 from pm4py.streaming.importer.xes import importer as xes_importer
-from pm4py.objects.petri_net.importer import importer as pnml_importer
-
-# import pydot
+from pm4py.analysis import check_soundness
 from IPython import display
 from graphviz import Digraph
+from pm4py.read import read_pnml
 
 import sys
-import time
+from time import time
 import csv
-import os
-from os.path import join, exists
-from config import INPUT_PATH, clean_directories, load
-clean_directories()
+from os.path import join, exists, isfile
+from os import listdir
+from config import INPUT_PATH, load, INPUT_XES_PATH, LOGS_WITH_NO_START_END, INPUT_G_PATH, OUTPUT_PN_PATH
 args = load()
+
+
+def check_start_end_traces(log_path):
+    log = read_xes(log_path)
+    log_name = log_path.split('/')[-1]
+    log_name_no_ext = log_name.split('.')[0]
+    files_in_path = []
+    files_in_path += [item for item in listdir(INPUT_XES_PATH) if isfile(join(INPUT_XES_PATH, item))]
+    # if log is not in list, it has START and END activities
+    if log_name_no_ext in LOGS_WITH_NO_START_END:
+        new_log_name = f'{log_name_no_ext}_correct.xes'
+        # if not exists, generating it with start and end activities
+        print('Adding START and END activities to all traces..')
+        new_log = artificial.insert_artificial_start_end(log, parameters={
+            artificial.Parameters.PARAM_ARTIFICIAL_START_ACTIVITY: 'START',
+            artificial.Parameters.PARAM_ARTIFICIAL_END_ACTIVITY: 'END'
+        })
+        print(f'Saving new log: {new_log_name}..')
+        write_xes(new_log, join(INPUT_XES_PATH, new_log_name))
+        return new_log, new_log_name
+    else:
+        return log, log_name
+
+
+def extract_process_model(log_name, log, net_path=None, threshold=0.4):
+    if net_path is not None:
+        print('Loading process model..')
+        net, initial_marking, final_marking = read_pnml(net_path)
+        return net, initial_marking, final_marking
+    else:
+        print('Extracting process model..')
+        net, initial_marking, final_marking = (inductive_miner.apply(
+            log, variant=inductive_miner.Variants.IMf, parameters=
+            {inductive_miner.Variants.IMf.value.Parameters.NOISE_THRESHOLD: threshold}))
+        print('Saving process model..')
+        write_pnml(net, initial_marking, final_marking,
+                   join(OUTPUT_PN_PATH, f'{log_name.split(".")[0]}_petri_net.pnml'))
+
+        # gviz = pn_visualize.apply(net, initial_marking, final_marking)
+        # gviz.render(filename="petri")
+
+        print('Process model infos..')
+        check_soundness(net, initial_marking, final_marking)
+        return net, initial_marking, final_marking
 
 
 # This function convert the .xes file to .csv file
@@ -154,7 +197,6 @@ def check_trace_conformance(trace, net, initial_marking, final_marking):
 #   la seconda 10+2 ecc)
 # Il mapping permette di capire quali sono le attività inserite nel grafo,
 # quindi la funzione restituisce anche una lista ins contenente le insertion.
-
 # crea il mapping, ritorna il map e la lista ins (lista degli inserimenti)
 def mapping(L1, L2):
     map = [0] * len(L1)
@@ -268,7 +310,7 @@ def compliant_trace(trace):
 
 
 # Deletion Repair
-# Questa funzione descrive il funzionamento della deletion repair. 
+# Questa funzione descrive il funzionamento della deletion repair.
 # Prende in input la lista dei nodi, la lista degli archi, il mapping e la lista delle deletion.
 # restituisce in output i nuovi nodi e archi ottenuti a seguito della deletion repair.
 def del_repair(V, W, map, deletion):
@@ -342,7 +384,7 @@ def ins_repair(V, W, map, insertion, V_n, ins_list, Vpos):
             # print('Position = ', position)
             pos = position[0]
         else:
-            # inserimento a ultimo posto. la posizione di inserimento è maggiore o uguale della lunghezza
+            # Inserimento a ultimo posto. La posizione di inserimento è maggiore o uguale della lunghezza
             # di Vpos (che non considera nodi da cancellare)
             position = V[-1]
             pos = position[0]
@@ -506,6 +548,7 @@ def update_label(W, map, V):
 
 
 # SAVE FILE
+"""
 def save_g_file(V, W, path, time, sort_labels):
     with open(path, 'w') as f:
         f.write("# Execution Time: {0:.3f} s\n".format(time))
@@ -518,6 +561,7 @@ def save_g_file(V, W, path, time, sort_labels):
             W.sort()
         for e in W:
             f.write("e {0} {1} {2}__{3}\n".format(e[0][0], e[1][0], e[0][1], e[1][1]))
+"""
 
 
 def save_g_final(V, W, path, sort_labels):
@@ -538,60 +582,17 @@ def save_csv(path, aligned, model_moves, num):
         writer = csv.writer(f, delimiter=";")
         writer.writerow([num, aligned, model_moves])
         f.close()
-    
 
-def BIG(tr_start=0, tr_end=None, view=False, filename=None, sort_labels=False):
-    if filename is None:
-        name_xes = args.xes_name
-        print(f'Filename xes di default: {name_xes}')
-    else:
-        name_xes = join(INPUT_PATH, 'xes', filename)
-    # check if exists
-    if not exists(name_xes):
-        raise FileNotFoundError(f'Filename: {name_xes} not found')
 
-    log_path = join(INPUT_PATH, 'xes', f'{name_xes}')
-    net_file = args.net_name
-    path_csv = join(INPUT_PATH, 'csv', args.csv_name)
-    log_total = read_xes(log_path)
-    # df_targetframe = convert_xes_to_csv(log_path, path_csv)
+def BIG(filename=None, sort_labels=False, initial_marking=None, final_marking=None, net=None):
+    init_time = time()
+    g_name = filename.split('/')[-1].split('.')[0]
+    print("BIG algorithm started...")
+    log_path = join(INPUT_XES_PATH, filename)
+    streaming_ev_object = xes_importer.apply(log_path, variant=xes_importer.Variants.XES_TRACE_STREAM)
 
-    net, initial_marking, final_marking = (inductive_miner
-                                           .apply(log_total, variant=inductive_miner.Variants.IMf,
-                                                  parameters={
-                                                      inductive_miner.Variants.IMf.value.Parameters.NOISE_THRESHOLD:
-                                                          0.4}))
-
-    pn_first = join(net_file, 'dgcnn_log_sample_net.pnml')
-    write_pnml(net, initial_marking, final_marking, pn_first)
-    net, initial_marking, final_marking = read_pnml(pn_first)
-
-    start = PetriNet.Transition("st", "START")
-    end = PetriNet.Transition("end", "END")
-    p_start = PetriNet.Place('p_start')
-    p_end = PetriNet.Place('p_end')
-    net.transitions.add(start)
-    net.transitions.add(end)
-    net.places.add(p_start)
-    net.places.add(p_end)
-    net_path = join(net_file, 'dgcnn_log_sample_net_startend.pnml')
-    write_pnml(net, initial_marking, final_marking, net_path)
-
-    splits = os.path.split(log_path)
-    name = splits[-1].split(".")[0]
-
-    streaming_ev_object = xes_importer.apply(log_path, variant=xes_importer.Variants.XES_TRACE_STREAM)  # file xes
-    net, initial_marking, final_marking = pnml_importer.apply(net_path)
-
-    # gviz = pn_visualizer.apply(net, initial_marking, final_marking)
-    # display.display(gviz)
-    # gviz.render(filename="petri")
-    # start_time_total = time.time()
-    # cr = findCausalRelationships(net, initial_marking, final_marking)
+    print('Finding causal relationships..')
     cr = find_causal_relationships(net)
-
-    # if view:
-    # print(cr)
 
     n = 0
 
@@ -605,16 +606,10 @@ def BIG(tr_start=0, tr_end=None, view=False, filename=None, sort_labels=False):
     compliant = []
     ins = []
 
-    start_time_total = time.time()
-
-    # with open("{0}_instance_graphs.csv".format(name), 'w') as f:
-    # writer=csv.writer(f,delimiter=";")
-    # writer.writerow(['n', 'aligned to model', 'with invisible moves'])
-    # f.close()
-
-    for trace in streaming_ev_object:
+    print(f'Processing traces...')
+    for index, trace in enumerate(streaming_ev_object):
+        trace_start_time = time()
         n += 1
-        # print(n)
         # pos trace
         Aligned, A = pick_aligned_trace(trace, net, initial_marking, final_marking)
         Align = Aligned[0]
@@ -637,7 +632,6 @@ def BIG(tr_start=0, tr_end=None, view=False, filename=None, sort_labels=False):
 
         d = []
 
-        trace_start_time = time.time()
         num = trace.attributes.get('concept:name')
         id = trace.attributes.get('variant-index')
 
@@ -679,17 +673,11 @@ def BIG(tr_start=0, tr_end=None, view=False, filename=None, sort_labels=False):
 
         # print('W repaired: ', W)
 
-        # if n==1500:
-        # viewInstanceGraph(V,W)
-
         # print('DELETION REPAIR')
         # print(d)
 
         for deletion in d:
             V, W = del_repair(V, W, map, deletion)
-
-        # if n==1500:
-        # viewInstanceGraph(V,W)
 
         # aggiorna le label dei nodi in base a quanto contenuto nel mapping
 
@@ -702,27 +690,37 @@ def BIG(tr_start=0, tr_end=None, view=False, filename=None, sort_labels=False):
         # print('V finale: ',V_new)
         # print('W finale: ',W_new)
 
-        # if n==7455:
-        # dot = viewInstanceGraph(V_new,W_new)
-        # dot.save()
-
         # dot = viewInstanceGraph(V,W)
         # dot.save()
+        save_g_final(V_new, W_new,
+                     join(INPUT_G_PATH, f'{g_name}_instance_graphs.g'), sort_labels)
+        print(f'\tTrace {index} processed in  {time() - trace_start_time} seconds..')
 
-        elapsed = time.time() - start_time_total
-
-        save_g_file(V_new, W_new, join(INPUT_PATH, 'testg', 'testgraph.g'), time.time() - trace_start_time, sort_labels)
-        save_g_final(V_new, W_new, join(INPUT_PATH, 'g', f'{name}_instance_graphs.g'), sort_labels)
-
-        # print('------------------------------------------------------------------')
-
-    # print('Time: ', elapsed)
+    print(f'BIG algorithm completed in {time() - init_time} seconds..')
 
 
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        filename = str(sys.argv[1])
-    else:
-        filename = None
+def process(log_name, net_path):
+    if log_name is None:
+        log_name = args.xes_name
 
-    BIG(filename=filename)
+    log_filename = join(INPUT_PATH, 'xes', log_name)
+    if not exists(log_filename):
+        raise FileNotFoundError(f'File: {log_filename} not found')
+
+    print(f'Processing log: {log_filename}..')
+    log, log_filename = check_start_end_traces(log_filename)
+    net, initial_marking, final_marking = extract_process_model(log_filename, log, net_path=net_path, threshold=0.4)
+    BIG(filename=log_filename, net=net, initial_marking=initial_marking, final_marking=final_marking)
+
+
+if __name__ == '__main__':
+    try:
+        log_name = sys.argv[1]
+    except (Exception, ):
+        log_name = None
+    try:
+        net_path = sys.argv[2]
+    except (Exception,):
+        net_path = None
+
+    process(log_name, net_path)
