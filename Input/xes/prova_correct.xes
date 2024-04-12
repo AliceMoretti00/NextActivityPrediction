@@ -1,0 +1,1753 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<log xes.version="1849-2016" xes.features="nested-attributes" xmlns="http://www.xes-standard.org/">
+	<extension name="Concept" prefix="concept" uri="http://www.xes-standard.org/concept.xesext" />
+	<extension name="Lifecycle" prefix="lifecycle" uri="http://www.xes-standard.org/lifecycle.xesext" />
+	<classifier name="Activity" keys="Activity" />
+	<string key="lifecycle:model" value="standard" />
+	<string key="creator" value="Fluxicon Disco" />
+	<string key="library" value="Fluxicon Octane" />
+	<global scope="trace">
+		<string key="concept:name" value="name" />
+		<string key="variant" value="string" />
+		<int key="variant-index" value="0" />
+	</global>
+	<global scope="event">
+		<string key="concept:name" value="name" />
+		<string key="lifecycle:transition" value="transition" />
+		<string key="Activity" value="string" />
+	</global>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T00:38:44.546000+02:00" />
+		<string key="concept:name" value="173688" />
+		<string key="AMOUNT_REQ" value="20000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T00:38:43.546000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T00:38:44.546000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T00:38:44.880000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T00:39:37.906000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T00:39:38.875000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-01T11:36:46.437000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T11:42:43.308000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T11:45:09.243000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T11:45:09.243000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T11:45:10.243000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T08:08:58.256000+02:00" />
+		<string key="concept:name" value="173691" />
+		<string key="AMOUNT_REQ" value="5000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T08:08:57.256000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T08:08:58.256000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T08:09:02.195000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T08:09:56.648000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T08:09:59.578000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-01T11:37:32.393000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<date key="time:timestamp" value="2011-10-01T11:43:13.178000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-01T14:27:57.775000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T14:33:54.614000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T14:35:46.016000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-01T14:35:46.016000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T14:35:47.016000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T08:10:30.287000+02:00" />
+		<string key="concept:name" value="173694" />
+		<string key="AMOUNT_REQ" value="7000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T08:10:29.287000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T08:10:30.287000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T08:10:30.591000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T08:11:13.026000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T08:11:13.390000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T11:31:25.301000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T11:35:59.637000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="G" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-03T11:12:02.445000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-01T11:35:59.637000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-03T11:12:02.445000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<date key="time:timestamp" value="2011-10-03T11:21:22.417000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11201" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-03T13:21:06.626000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11201" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-03T13:32:43.313000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11201" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-03T13:32:52.818000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11201" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-03T13:34:25.421000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11201" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-03T13:40:14.632000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11201" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-03T13:40:14.632000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-03T13:40:15.632000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T08:11:08.865000+02:00" />
+		<string key="concept:name" value="173697" />
+		<string key="AMOUNT_REQ" value="15000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T08:11:07.866000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T08:11:08.866000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T08:11:09.035000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T08:11:46.420000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T08:11:47.420000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T08:15:39.894000+02:00" />
+		<string key="concept:name" value="173700" />
+		<string key="AMOUNT_REQ" value="5000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T08:15:38.894000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T08:15:39.894000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T08:15:40.102000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T08:16:21.037000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T08:16:22.037000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T09:45:25.806000+02:00" />
+		<string key="concept:name" value="173703" />
+		<string key="AMOUNT_REQ" value="13500" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T09:45:24.806000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T09:45:25.806000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T09:45:25.981000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T09:46:18.211000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T09:46:18.674000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T11:37:46.748000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T11:40:24.141000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T12:40:26.958000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T12:40:27.958000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T09:45:37.274000+02:00" />
+		<string key="concept:name" value="173706" />
+		<string key="AMOUNT_REQ" value="18000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T09:45:36.274000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T09:45:37.274000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T09:45:37.363000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T09:46:18.623000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T10:15:43.883000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T10:16:48.956000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T10:16:48.991000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T10:16:49.843000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T11:49:28.183000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T11:50:14.483000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T11:50:21.451000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-01T11:53:55.769000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="G" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-01T14:50:26.172000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-01T10:16:48.956000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T10:16:49.956000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T09:57:42.994000+02:00" />
+		<string key="concept:name" value="173709" />
+		<string key="AMOUNT_REQ" value="11000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T09:57:41.994000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T09:57:42.994000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T09:57:43.182000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T09:58:27.038000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T09:58:27.403000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T10:26:42.203000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T10:27:07.853000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T11:40:40.141000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T11:43:02.623000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10982" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-10T17:42:24.738000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10982" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-10T17:43:13.290000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-10T17:43:14.290000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T09:58:30.533000+02:00" />
+		<string key="concept:name" value="173712" />
+		<string key="AMOUNT_REQ" value="30000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T09:58:29.533000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T09:58:30.533000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T09:58:30.678000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T09:58:44.046000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T10:08:36.700000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T10:10:24.737000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T10:10:24.780000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T10:10:25.759000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T10:10:25.759000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11019" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T12:59:13.844000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11019" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T13:03:35.216000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11180" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-03T11:16:05.035000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11180" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-03T11:17:29.105000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11180" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-03T14:39:34.962000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11180" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-03T14:42:53.820000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-03T14:42:54.820000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T09:59:10.501000+02:00" />
+		<string key="concept:name" value="173715" />
+		<string key="AMOUNT_REQ" value="45000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T09:59:09.501000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T09:59:10.501000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T09:59:10.789000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T09:59:42.704000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T09:59:43.080000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="E" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-01T11:44:00.187000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-01T11:44:00.187000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T12:18:51.701000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T12:24:32.787000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-01T12:30:20.556000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T12:30:21.556000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T10:37:39.362000+02:00" />
+		<string key="concept:name" value="173718" />
+		<string key="AMOUNT_REQ" value="15000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T10:37:38.363000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T10:37:39.363000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T10:37:39.657000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T10:38:20.967000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T10:38:21.403000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-01T10:38:48.454000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T10:42:21.977000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T10:44:40.725000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-01T10:44:40.725000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T10:44:41.725000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T11:07:34.279000+02:00" />
+		<string key="concept:name" value="173721" />
+		<string key="AMOUNT_REQ" value="9000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T11:07:33.279000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T11:07:34.279000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T11:07:34.928000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T11:08:17.093000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T11:08:17.494000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T11:08:17.494000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T11:09:08.607000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T11:18:36.318000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T11:20:47.605000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-01T11:20:47.605000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T11:20:48.605000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T11:52:14.305000+02:00" />
+		<string key="concept:name" value="173724" />
+		<string key="AMOUNT_REQ" value="15000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T11:52:13.305000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T11:52:14.305000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T11:52:14.576000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T11:53:00.740000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T12:04:34.265000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T12:12:27.600000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T12:19:56.702000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T12:20:54.061000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T12:20:54.061000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T12:20:54.150000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T12:20:55.527000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T13:24:12.098000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T13:27:08.763000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-01T14:01:52.452000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<date key="time:timestamp" value="2011-10-01T14:02:01.804000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11000" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T15:12:31.862000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11000" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T15:15:17.707000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T15:15:18.707000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T00:38:44.546000+02:00" />
+		<string key="concept:name" value="173688" />
+		<string key="AMOUNT_REQ" value="20000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T00:38:43.546000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T00:38:44.546000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T00:38:44.880000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T00:39:37.906000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T00:39:38.875000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-01T11:36:46.437000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T11:42:43.308000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T11:45:09.243000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T11:45:09.243000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T11:45:10.243000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T08:08:58.256000+02:00" />
+		<string key="concept:name" value="173691" />
+		<string key="AMOUNT_REQ" value="5000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T08:08:57.256000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T08:08:58.256000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T08:09:02.195000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T08:09:56.648000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T08:09:59.578000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-01T11:37:32.393000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<date key="time:timestamp" value="2011-10-01T11:43:13.178000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-01T14:27:57.775000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T14:33:54.614000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T14:35:46.016000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-01T14:35:46.016000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T14:35:47.016000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T08:10:30.287000+02:00" />
+		<string key="concept:name" value="173694" />
+		<string key="AMOUNT_REQ" value="7000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T08:10:29.287000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T08:10:30.287000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T08:10:30.591000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T08:11:13.026000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T08:11:13.390000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T11:31:25.301000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T11:35:59.637000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-03T11:12:02.445000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<date key="time:timestamp" value="2011-10-03T11:21:22.417000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11201" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-03T13:21:06.626000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11201" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-03T13:32:43.313000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11201" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-03T13:32:52.818000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11201" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-03T13:34:25.421000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11201" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-03T13:40:14.632000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11201" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-03T13:40:14.632000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-03T13:40:15.632000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T08:11:08.865000+02:00" />
+		<string key="concept:name" value="173697" />
+		<string key="AMOUNT_REQ" value="15000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T08:11:07.866000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T08:11:08.866000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T08:11:09.035000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T08:11:46.420000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T08:11:47.420000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T08:15:39.894000+02:00" />
+		<string key="concept:name" value="173700" />
+		<string key="AMOUNT_REQ" value="5000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T08:15:38.894000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T08:15:39.894000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T08:15:40.102000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T08:16:21.037000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T08:16:22.037000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T09:45:25.806000+02:00" />
+		<string key="concept:name" value="173703" />
+		<string key="AMOUNT_REQ" value="13500" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T09:45:24.806000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T09:45:25.806000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T09:45:25.981000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T09:46:18.211000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T09:46:18.674000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T11:37:46.748000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T11:40:24.141000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T12:40:26.958000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T12:40:27.958000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T09:45:37.274000+02:00" />
+		<string key="concept:name" value="173706" />
+		<string key="AMOUNT_REQ" value="18000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T09:45:36.274000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T09:45:37.274000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T09:45:37.363000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T09:46:18.623000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T10:15:43.883000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-01T10:16:48.956000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T10:16:49.956000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T09:57:42.994000+02:00" />
+		<string key="concept:name" value="173709" />
+		<string key="AMOUNT_REQ" value="11000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T09:57:41.994000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T09:57:42.994000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T09:57:43.182000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T09:58:27.038000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T09:58:27.403000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T10:26:42.203000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T10:27:07.853000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T11:40:40.141000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T11:43:02.623000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10982" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-10T17:42:24.738000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10982" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-10T17:43:13.290000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-10T17:43:14.290000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T09:58:30.533000+02:00" />
+		<string key="concept:name" value="173712" />
+		<string key="AMOUNT_REQ" value="30000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T09:58:29.533000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T09:58:30.533000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T09:58:30.678000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T09:58:44.046000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T10:08:36.700000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T10:10:24.737000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T10:10:24.780000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T10:10:25.759000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11019" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T12:59:13.844000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11019" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T13:03:35.216000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11180" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-03T11:16:05.035000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11180" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-03T11:17:29.105000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11180" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-03T14:39:34.962000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11180" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-03T14:42:53.820000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-03T14:42:54.820000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T09:59:10.501000+02:00" />
+		<string key="concept:name" value="173715" />
+		<string key="AMOUNT_REQ" value="45000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T09:59:09.501000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T09:59:10.501000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T09:59:10.789000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T09:59:42.704000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T09:59:43.080000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-01T11:44:00.187000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T12:18:51.701000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T12:24:32.787000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-01T12:30:20.556000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T12:30:21.556000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T10:37:39.362000+02:00" />
+		<string key="concept:name" value="173718" />
+		<string key="AMOUNT_REQ" value="15000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T10:37:38.363000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T10:37:39.363000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T10:37:39.657000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T10:38:20.967000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T10:38:21.403000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-01T10:38:48.454000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T10:42:21.977000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T10:44:40.725000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10862" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-01T10:44:40.725000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T10:44:41.725000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T11:07:34.279000+02:00" />
+		<string key="concept:name" value="173721" />
+		<string key="AMOUNT_REQ" value="9000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T11:07:33.279000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T11:07:34.279000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T11:07:34.928000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T11:08:17.093000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T11:08:17.494000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T11:09:08.607000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="E" />
+			<date key="time:timestamp" value="2011-10-01T11:18:36.318000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T11:20:47.605000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="G" />
+			<date key="time:timestamp" value="2011-10-01T11:20:47.605000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T11:20:48.605000+02:00" />
+		</event>
+	</trace>
+	<trace>
+		<date key="REG_DATE" value="2011-10-01T11:52:14.305000+02:00" />
+		<string key="concept:name" value="173724" />
+		<string key="AMOUNT_REQ" value="15000" />
+		<event>
+			<string key="concept:name" value="START" />
+			<date key="time:timestamp" value="2011-10-01T11:52:13.305000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="A" />
+			<date key="time:timestamp" value="2011-10-01T11:52:14.305000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="B" />
+			<date key="time:timestamp" value="2011-10-01T11:52:14.576000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="112" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T11:53:00.740000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T12:04:34.265000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T12:12:27.600000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T12:19:56.702000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="C" />
+			<date key="time:timestamp" value="2011-10-01T12:20:54.061000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="SCHEDULE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T12:20:54.150000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10939" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="F" />
+			<date key="time:timestamp" value="2011-10-01T12:20:55.527000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T13:24:12.098000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="10912" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T13:27:08.763000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="START" />
+			<date key="time:timestamp" value="2011-10-01T14:01:52.452000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="D" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<date key="time:timestamp" value="2011-10-01T14:02:01.804000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11000" />
+			<string key="lifecycle:transition" value="START" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T15:12:31.862000+02:00" />
+		</event>
+		<event>
+			<string key="org:resource" value="11000" />
+			<string key="lifecycle:transition" value="COMPLETE" />
+			<string key="concept:name" value="D" />
+			<date key="time:timestamp" value="2011-10-01T15:15:17.707000+02:00" />
+		</event>
+		<event>
+			<string key="concept:name" value="END" />
+			<date key="time:timestamp" value="2011-10-01T15:15:18.707000+02:00" />
+		</event>
+	</trace>
+</log>

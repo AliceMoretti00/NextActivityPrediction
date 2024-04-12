@@ -3,7 +3,7 @@ from os.path import join, abspath, exists, dirname
 from shutil import rmtree
 from argparse import ArgumentParser
 
-LOGS_WITH_NO_START_END = ['BPI12']
+LOGS_WITH_NO_START_END = ['prova']
 
 BASE_PATH = dirname((abspath(__file__)))
 INPUT_PATH = join(BASE_PATH, 'Input')
