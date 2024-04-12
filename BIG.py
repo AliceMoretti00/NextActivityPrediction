@@ -15,13 +15,14 @@ from time import time
 import csv
 from os.path import join, exists, isfile
 from os import listdir
+import os
 from config import INPUT_PATH, load, INPUT_XES_PATH, LOGS_WITH_NO_START_END, INPUT_G_PATH, OUTPUT_PN_PATH
 args = load()
 
 
 def check_start_end_traces(log_path):
     log = read_xes(log_path)
-    log_name = log_path.split('/')[-1]
+    log_name = os.path.split(log_path)[-1]
     log_name_no_ext = log_name.split('.')[0]
     files_in_path = []
     files_in_path += [item for item in listdir(INPUT_XES_PATH) if isfile(join(INPUT_XES_PATH, item))]
