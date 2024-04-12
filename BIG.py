@@ -16,8 +16,11 @@ import csv
 from os.path import join, exists, isfile
 from os import listdir
 import os
-from config import INPUT_PATH, load, INPUT_XES_PATH, LOGS_WITH_NO_START_END, INPUT_G_PATH, OUTPUT_PN_PATH
+from config import INPUT_PATH, INPUT_XES_PATH, LOGS_WITH_NO_START_END, INPUT_G_PATH, OUTPUT_PN_PATH
+from config import load, clean_directories
 args = load()
+clean_directories()
+
 
 
 def check_start_end_traces(log_path):

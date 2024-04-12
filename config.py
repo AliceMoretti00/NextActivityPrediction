@@ -138,4 +138,3 @@ def load():
     return args
 
 
-clean_directories()
