@@ -234,7 +234,7 @@ def get_g_dataframe(filename=None):
     '''
 
     if filename is None:  # filename is the parameter of the function
-        name_xes = args.xes_name
+        name_xes = args.xes_name_se
         print(f'Filename xes di default: {"name_xes"}')
     else:
         name_xes = join(INPUT_PATH, 'xes', filename)

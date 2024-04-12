@@ -109,6 +109,7 @@ def load():
     parser.add_argument('--data_dir', default=join(OUTPUT_PATH, 'dataset'))
     parser.add_argument('--csv_name', default=join(INPUT_PATH, 'csv', 'prova.csv'))
     parser.add_argument('--xes_name',  default=join(INPUT_PATH, 'xes', 'prova.xes'))
+    parser.add_argument('--xes_name_se',  default=join(INPUT_PATH, 'xes', 'prova_correct.xes'))
     parser.add_argument('--net_name', default=join(OUTPUT_PATH, 'petri_nets'))
     parser.add_argument('--checkpoint_dir', default=join(OUTPUT_PATH, 'checkpoints'))
     parser.add_argument('--dataset', default='p2p')
