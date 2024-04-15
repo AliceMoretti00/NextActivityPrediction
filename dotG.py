@@ -12,6 +12,7 @@ import numpy as np
 from cli_functions import select_features
 from sklearn.preprocessing import MinMaxScaler
 import os
+import copy
 
 args = load()
 
@@ -686,9 +687,29 @@ def get_g_dataframe(filename=None):
         # Normalizzazione delle feature norm_time - trace_time - prev_event_time
         g_dataframe[i] = g_dataframe[i].div(g_dataframe[i].max()).round(15)
 
-    resources = [x for x in unique if str(x)!= 'nan']
-    resources_dict = dict.fromkeys(resources)
+    resources = [x for x in unique if str(x) != 'nan']
+    resources_dict = dict.fromkeys(resources, 0)
     start_dates = sorted(list(set(list(g_dataframe['start'].dropna()))))
+
+    g_dataframe['resources'] = float('nan')
+    g_dataframe['resources'] = g_dataframe['resources'].astype(object)
+
+    num_graphs = g_dataframe['e_v'].value_counts()['XP']
+
+    for i in start_dates:
+        j = g_dataframe[g_dataframe['start'] <= i]
+        finish_time = j[j['finish'] >= i]
+        res = list(finish_time['org:resource(NaN)'])
+
+        current_dict = copy.deepcopy(resources_dict)
+        for r in res:
+            if r in current_dict:
+                current_dict[r] += 1
+
+        features = [x/num_graphs for x in current_dict.values()]
+
+        for index in list(finish_time.index):
+            g_dataframe.at[index, 'resources'] = features
 
     # casting time column as string
     g_dataframe[['finish', 'start']] = g_dataframe[['finish', 'start']].astype(str)
