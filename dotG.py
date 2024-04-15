@@ -686,6 +686,10 @@ def get_g_dataframe(filename=None):
         # Normalizzazione delle feature norm_time - trace_time - prev_event_time
         g_dataframe[i] = g_dataframe[i].div(g_dataframe[i].max()).round(15)
 
+    resources = [x for x in unique if str(x)!= 'nan']
+    resources_dict = dict.fromkeys(resources)
+    start_dates = sorted(list(set(list(g_dataframe['start'].dropna()))))
+
     # casting time column as string
     g_dataframe[['finish', 'start']] = g_dataframe[['finish', 'start']].astype(str)
     # add blank row before XPs
