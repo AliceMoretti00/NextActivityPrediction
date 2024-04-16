@@ -691,11 +691,12 @@ def get_g_dataframe(filename=None):
     resources_dict = dict.fromkeys(resources, 0)
     start_dates = sorted(list(set(list(g_dataframe['start'].dropna()))))
 
-    g_dataframe['resources'] = float('nan')
+    g_dataframe['resources'] = [[]] * len(g_dataframe)
     g_dataframe['resources'] = g_dataframe['resources'].astype(object)
 
     num_graphs = g_dataframe['e_v'].value_counts()['XP']
 
+    # Per ogni tempo si vanno a vedere le attività in corso e si assegnano le rispettive risorse occupate
     for i in start_dates:
         j = g_dataframe[g_dataframe['start'] <= i]
         finish_time = j[j['finish'] >= i]
@@ -721,7 +722,7 @@ def get_g_dataframe(filename=None):
 
     # recompose the string for the final .g file
 
-    blacklist = ['finish', 'start', 'name_track']
+    blacklist = ['finish', 'start', 'name_track', 'org:resource(NaN)']
 
     g_dataframe.drop(columns=blacklist, axis=1, inplace=True)
 
@@ -729,10 +730,12 @@ def get_g_dataframe(filename=None):
 
     print_file.write('Start writing the complete.g file...\n')
     print_file.flush()
-    g_dataframe[list(g_dataframe.columns)] = g_dataframe[list(g_dataframe.columns)].astype(str)
-    g_dataframe['tmp'] = g_dataframe[list(g_dataframe.columns)].T.agg(' '.join)
-    g_dataframe['tmp'] = g_dataframe['tmp'].str.strip()
-    tmp = g_dataframe['tmp'][1:].str.cat(sep='\n')
+
+    save_df = g_dataframe.copy()
+    save_df[list(save_df.columns)] = save_df[list(save_df.columns)].astype(str)
+    save_df['tmp'] = save_df[list(save_df.columns)].T.agg(' '.join)
+    save_df['tmp'] = save_df['tmp'].str.strip()
+    tmp = save_df['tmp'][1:].str.cat(sep='\n')
     tmp += '\n'
     tmp = tmp.replace("nan", "")
 
@@ -745,5 +748,4 @@ def get_g_dataframe(filename=None):
     w.close()
 
     g_dataframe['e_v'] = g_dataframe['e_v'].replace('\nXP', 'XP')
-    g_dataframe = g_dataframe.iloc[:, :-1]
     return g_dataframe, att_numerici, att_categorici, encoding_dict

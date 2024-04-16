@@ -72,7 +72,11 @@ class TraceDataset(InMemoryDataset):
                 # Aggiungi gli attributi numerici
                 for attr in att_numerici:
                     if attr in node_attrs:
-                        node_features.append(float(node_attrs[attr]))
+                        try:
+                            node_features.append(float(node_attrs[attr]))
+                        except:
+                            resource_features = [float(x) for x in node_attrs[attr]]
+                            node_features.extend(resource_features)
 
                 # # Aggiungi gli attributi categorici in formato One-Hot
                 for attr in att_categorici:
@@ -280,7 +284,10 @@ def create_graph():
                         if col_name in att_categorici:
                             node_attributes[col_name] = str(col_value)
                         elif col_name in att_numerici:
-                            node_attributes[col_name] = float(col_value)
+                            try:
+                                node_attributes[col_name] = float(col_value)
+                            except:
+                                node_attributes[col_name] = [float(x) for x in col_value]
                         else:
 
                             try:
@@ -288,13 +295,19 @@ def create_graph():
                                 if col_name not in att_numerici:
                                     att_numerici.append(col_name)
                                     print(
-                                        '***************  inserimento  ' + col_name + ' --> in att_numerici ********************')
+                                        '***************  inserimento  ' + str(col_name) + ' --> in att_numerici ********************')
+                            except Exception:
+                                node_attributes[col_name] = [float(x) for x in col_value]
+                                if col_name not in att_numerici:
+                                    att_numerici.append(col_name)
+                                    print(
+                                        '***************  inserimento  ' + str(col_name) + ' --> in att_numerici ********************')
                             except:
                                 node_attributes[col_name] = col_value
                                 if col_name not in att_categorici:
                                     att_categorici.append(col_name)
                                     print(
-                                        '***************  inserimento  ' + col_name + ' --> in att_categorici ********************')
+                                        '***************  inserimento  ' + str(col_name) + ' --> in att_categorici ********************')
 
                 # Aggiungi il nodo al grafo
                 G.add_node(node_nr, **node_attributes)
