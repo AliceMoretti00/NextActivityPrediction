@@ -528,6 +528,8 @@ def get_g_dataframe(filename=None):
     del_col_file.write("\n".join(col_unique_val) + "\n\n")
     del_col_file.flush()
 
+
+    #  If you want to choose custom features decomment this block
     # ************************************************************************************
     #
     #
@@ -536,7 +538,7 @@ def get_g_dataframe(filename=None):
     #
     #
     # #
-
+    """
     clm = targetframe.columns.values
 
     # 'Case ID' - Activity - Complete Timestamp
@@ -566,11 +568,8 @@ def get_g_dataframe(filename=None):
 
     else:
         regression = False
-        selected_columns, not_selected_columns, opzione_scelta, train_rete = select_features(selected_columns,
-                                                                                             col_eliminate, regression)
-
-    del_col_file.write("\n".join(not_selected_columns) + "\n\n")
-    del_col_file.flush()
+        # selected_columns, not_selected_columns, opzione_scelta, train_rete = select_features(selected_columns,
+        #                                                                                     col_eliminate, regression)
 
     if regression:
         dtl = targetframe['Days too late']
@@ -601,9 +600,11 @@ def get_g_dataframe(filename=None):
 
     print_file.write('Set values, sizes and array for all features + target and add to g_dataframe...\n')
     print_file.flush()
-
+    
     # crea una lista di conteggi di nodi per ogni grafo
+
     sizes = np.array(g_dataframe.groupby('name_track', sort=False, as_index=False).size()['size'])
+    """
 
     idxss = list(np.where(~g_dataframe['name_track'].isnull()))[
         0]  # Trova gli indici delle righe in cui la colonna 'name_track' di g_dataframe non è nulla.
@@ -636,16 +637,21 @@ def get_g_dataframe(filename=None):
 
     """
 
+    selected_columns = ['org:resource(NaN)']
+    g_dataframe['org:resource(NaN)'] = 'No_resource'
+
     att_categorici = []
     att_numerici = []
     encoding_dict = {}
 
     # Set values, sizes, and array per tutte le colonne selezionate
-    for i in selected_columns:
+    for i in list(selected_columns):
         print_file.write(f'Aggiungi {i} a g_dataframe...\n')
         print_file.flush()
 
         for idx, element in zip(idxss, targetframe[i]):
+            if str(element) == 'nan':
+                element = 'No_resource'
             g_dataframe.loc[idx, str(i)] = element
 
         # If you want to fill the rest of the DataFrame with NaNs in the 'ciao' column
@@ -654,7 +660,7 @@ def get_g_dataframe(filename=None):
         # g_dataframe[i] = [np.nan] * len(g_dataframe)
         # arr = pd.Series(arr)
 
-        unique = targetframe[i].unique()
+        unique = g_dataframe[i].unique()
         flag_string = False
 
         for elem in unique:
@@ -717,12 +723,16 @@ def get_g_dataframe(filename=None):
     # add blank row before XPs
     g_dataframe['e_v'].replace('XP', '\nXP', inplace=True)
 
-    g_dataframe.fillna('', inplace=True)
-    g_dataframe.replace({'NaT': ''}, inplace=True)
+    remove_nans_columns = [col for col in g_dataframe.columns if col != 'org:resource(NaN)']
+    g_dataframe[remove_nans_columns] = g_dataframe[remove_nans_columns].fillna('')
+    g_dataframe[remove_nans_columns] = g_dataframe[remove_nans_columns].replace({'NaT': ''})
+
+
 
     # recompose the string for the final .g file
 
-    blacklist = ['finish', 'start', 'name_track', 'org:resource(NaN)']
+    blacklist = ['finish', 'start', 'name_track']
+    # blacklist.append('org:resource(NaN)')  # to delete one hot encoding for resources
 
     g_dataframe.drop(columns=blacklist, axis=1, inplace=True)
 
