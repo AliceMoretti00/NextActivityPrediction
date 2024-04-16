@@ -3,7 +3,7 @@ from os.path import join, abspath, exists, dirname
 from shutil import rmtree
 from argparse import ArgumentParser
 
-LOGS_WITH_NO_START_END = ['prova']
+LOGS_WITH_NO_START_END = ['BPI_Challenge_2012']
 
 BASE_PATH = dirname((abspath(__file__)))
 INPUT_PATH = join(BASE_PATH, 'Input')
@@ -107,9 +107,9 @@ def load():
     parser.add_argument('--attr_list',
                         default=['bu', 'nrchanges', 'ttmotif', 'plant', 'matgroup', 'polines', 'vendor', 'item'])
     parser.add_argument('--data_dir', default=join(OUTPUT_PATH, 'dataset'))
-    parser.add_argument('--csv_name', default=join(INPUT_PATH, 'csv', 'prova.csv'))
-    parser.add_argument('--xes_name',  default=join(INPUT_PATH, 'xes', 'prova.xes'))
-    parser.add_argument('--xes_name_se',  default=join(INPUT_PATH, 'xes', 'prova_correct.xes'))
+    parser.add_argument('--csv_name', default=join(INPUT_PATH, 'csv', 'BPI_Challenge_2012.csv'))
+    parser.add_argument('--xes_name',  default=join(INPUT_PATH, 'xes', 'BPI_Challenge_2012.xes'))
+    parser.add_argument('--xes_name_se',  default=join(INPUT_PATH, 'xes', 'BPI_Challenge_2012_correct.xes'))
     parser.add_argument('--net_name', default=join(OUTPUT_PATH, 'petri_nets'))
     parser.add_argument('--checkpoint_dir', default=join(OUTPUT_PATH, 'checkpoints'))
     parser.add_argument('--dataset', default='p2p')
