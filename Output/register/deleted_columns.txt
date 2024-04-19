@@ -1,0 +1,7 @@
+Colonne eliminate per numero di NaN > 5%:
+org:resource
+lifecycle:transition
+
+Colonne eliminate con stesso valore per ogni riga:
+
+

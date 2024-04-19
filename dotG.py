@@ -1,6 +1,6 @@
 import gc
 from config import load
-from config import INPUT_PATH, OUTPUT_PATH
+from config import INPUT_PATH, OUTPUT_PATH, OUTPUT_DS_PATH
 from pm4py.util import xes_constants as xes
 import pm4py
 import shutil
@@ -528,7 +528,6 @@ def get_g_dataframe(filename=None):
     del_col_file.write("\n".join(col_unique_val) + "\n\n")
     del_col_file.flush()
 
-
     #  If you want to choose custom features decomment this block
     # ************************************************************************************
     #
@@ -671,7 +670,7 @@ def get_g_dataframe(filename=None):
 
         if flag_string:
             att_categorici.append(i)
-            encoding_dict.update({i: {unique[j]: j+1 for j in range(len(unique))}})
+            encoding_dict.update({i: {unique[j]: j + 1 for j in range(len(unique))}})
         else:
             att_numerici.append(i)
 
@@ -697,17 +696,26 @@ def get_g_dataframe(filename=None):
     resources_dict = dict.fromkeys(resources, 0)
     start_dates = sorted(list(set(list(g_dataframe['start'].dropna()))))
 
-    g_dataframe['resources'] = [[0]*len(unique)] * len(g_dataframe)
+    g_dataframe['resources'] = [[0] * len(unique)] * len(g_dataframe)
     g_dataframe['resources'] = g_dataframe['resources'].astype(object)
 
-    # Per ogni tempo si vanno a vedere le attività in corso e si assegnano le rispettive risorse occupate
+    log_prefix = open(join(OUTPUT_DS_PATH, 'prefix_log.txt'), "w")
+
+    # For every time, takes current activities to get the busy resources
     for i in start_dates:
-        # attività in corso
+        # current activity
         j = g_dataframe[g_dataframe['start'] <= i]
         finish_time = j[j['finish'] >= i]
         res = list(finish_time['org:resource(NaN)'])
 
         current_dict = copy.deepcopy(resources_dict)
+
+        # create a log file in the format
+        # timestamp name_track name_event
+        for active_case in range(0, len(finish_time)):
+            log_prefix.write(str(i) + " " + finish_time.iloc[active_case]['name_track'] + " " +
+                             finish_time.iloc[active_case]['name_event'] + "\n")
+
         for r in res:
             if r in current_dict:
                 current_dict[r] += 1
@@ -715,18 +723,21 @@ def get_g_dataframe(filename=None):
         features = [x for x in current_dict.values()]
 
         for index in list(finish_time.index):
-            g_dataframe.at[index, 'resources'] = [a+b for a, b in zip(g_dataframe.iloc[index]['resources'], features)]
+            g_dataframe.at[index, 'resources'] = [a + b for a, b in zip(g_dataframe.iloc[index]['resources'], features)]
+
+    log_prefix.close()
 
     for i in range(0, len(g_dataframe['resources'])):
         if sum(g_dataframe.iloc[i]['resources']) != 0:
-            g_dataframe.at[i, 'resources'] = [x / sum(g_dataframe.iloc[i]['resources']) for x in g_dataframe.iloc[i]
-                                                                            ['resources']]
+            g_dataframe.at[i, 'resources'] = [x / sum(g_dataframe.iloc[i]['resources']) for x in
+                                              g_dataframe.iloc[i]['resources']]
 
     # casting time column as string
     g_dataframe[['finish', 'start']] = g_dataframe[['finish', 'start']].astype(str)
     # add blank row before XPs
     g_dataframe['e_v'].replace('XP', '\nXP', inplace=True)
-    # rimuovi valori nulli
+
+    # remove nan and null values
     remove_nans_columns = [col for col in g_dataframe.columns if col != 'org:resource(NaN)']
     g_dataframe[remove_nans_columns] = g_dataframe[remove_nans_columns].fillna('')
     g_dataframe[remove_nans_columns] = g_dataframe[remove_nans_columns].replace({'NaT': ''})
@@ -735,7 +746,6 @@ def get_g_dataframe(filename=None):
             g_dataframe.at[i, 'resources'] = ''
             g_dataframe.at[i, 'org:resource(NaN)'] = ''
 
-    g_dataframe['e_v']
     # recompose the string for the final .g file
 
     blacklist = ['finish', 'start', 'name_track']
