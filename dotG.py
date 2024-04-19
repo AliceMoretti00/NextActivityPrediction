@@ -715,21 +715,27 @@ def get_g_dataframe(filename=None):
         features = [x for x in current_dict.values()]
 
         for index in list(finish_time.index):
-            g_dataframe.iloc[index]['resources'] = g_dataframe.iloc[index]['resources'] + features
+            g_dataframe.at[index, 'resources'] = [a+b for a, b in zip(g_dataframe.iloc[index]['resources'], features)]
 
-    for activity in g_dataframe['resources']:
-        g_dataframe.iloc[activity]['resources'] = g_dataframe.iloc[activity]['resources']/sum(g_dataframe.iloc[activity]['resources'])
+    for i in range(0, len(g_dataframe['resources'])):
+        if sum(g_dataframe.iloc[i]['resources']) != 0:
+            g_dataframe.at[i, 'resources'] = [x / sum(g_dataframe.iloc[i]['resources']) for x in g_dataframe.iloc[i]
+                                                                            ['resources']]
+
     # casting time column as string
     g_dataframe[['finish', 'start']] = g_dataframe[['finish', 'start']].astype(str)
     # add blank row before XPs
     g_dataframe['e_v'].replace('XP', '\nXP', inplace=True)
-
+    # rimuovi valori nulli
     remove_nans_columns = [col for col in g_dataframe.columns if col != 'org:resource(NaN)']
     g_dataframe[remove_nans_columns] = g_dataframe[remove_nans_columns].fillna('')
     g_dataframe[remove_nans_columns] = g_dataframe[remove_nans_columns].replace({'NaT': ''})
+    for i in range(0, len(g_dataframe)):
+        if g_dataframe.iloc[i]['e_v'] != 'v':
+            g_dataframe.at[i, 'resources'] = ''
+            g_dataframe.at[i, 'org:resource(NaN)'] = ''
 
-
-
+    g_dataframe['e_v']
     # recompose the string for the final .g file
 
     blacklist = ['finish', 'start', 'name_track']
