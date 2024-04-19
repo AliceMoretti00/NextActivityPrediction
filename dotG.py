@@ -697,13 +697,12 @@ def get_g_dataframe(filename=None):
     resources_dict = dict.fromkeys(resources, 0)
     start_dates = sorted(list(set(list(g_dataframe['start'].dropna()))))
 
-    g_dataframe['resources'] = [[]] * len(g_dataframe)
+    g_dataframe['resources'] = [[0]*len(unique)] * len(g_dataframe)
     g_dataframe['resources'] = g_dataframe['resources'].astype(object)
-
-    num_graphs = g_dataframe['e_v'].value_counts()['XP']
 
     # Per ogni tempo si vanno a vedere le attività in corso e si assegnano le rispettive risorse occupate
     for i in start_dates:
+        # attività in corso
         j = g_dataframe[g_dataframe['start'] <= i]
         finish_time = j[j['finish'] >= i]
         res = list(finish_time['org:resource(NaN)'])
@@ -713,11 +712,13 @@ def get_g_dataframe(filename=None):
             if r in current_dict:
                 current_dict[r] += 1
 
-        features = [x/num_graphs for x in current_dict.values()]
+        features = [x for x in current_dict.values()]
 
         for index in list(finish_time.index):
-            g_dataframe.at[index, 'resources'] = features
+            g_dataframe.iloc[index]['resources'] = g_dataframe.iloc[index]['resources'] + features
 
+    for activity in g_dataframe['resources']:
+        g_dataframe.iloc[activity]['resources'] = g_dataframe.iloc[activity]['resources']/sum(g_dataframe.iloc[activity]['resources'])
     # casting time column as string
     g_dataframe[['finish', 'start']] = g_dataframe[['finish', 'start']].astype(str)
     # add blank row before XPs
