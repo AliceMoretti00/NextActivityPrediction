@@ -27,11 +27,17 @@ args = config.load()
 
 """classe Pytorch per la creazione o lettura del dataset per allenare la rete.
 
-il file che contiene il dataset sarà creato all'interno della cartella process, questa cartella viene creata all'interno della cartella dataset precedentemente creata nel drive. Il nome del file creato sarà quello passato dal metodo processed_file_names della classe.
+il file che contiene il dataset sarà creato all'interno della cartella process, questa cartella viene creata all'interno 
+della cartella dataset precedentemente creata nel drive. Il nome del file creato sarà quello passato dal metodo 
+processed_file_names della classe.
 
-Quando la classe viene richiamata prima controlla se all'interno della cartella process è presente il file con il nome passato nel metodo processed_file_names, se presente andrà a leggere il file, se non presente andrà ad attivare il metodo process per la creazione di un nuovo dataset e gli darà il nome passato tramite il metodo processed_file_names.
+Quando la classe viene richiamata prima controlla se all'interno della cartella process è presente il file con il nome 
+passato nel metodo processed_file_names, se presente andrà a leggere il file, se non presente andrà ad attivare il 
+metodo process per la creazione di un nuovo dataset e gli darà il nome passato tramite il metodo processed_file_names.
 
-In questo script viene utilizzato per la lettura del dataset, si consiglia di controllare che il dataset sian presente all'interno della cartella process e inserire all'interno del metodo processed_file_names il nome del dataset da voler utilizzare per allenare la rete.
+In questo script viene utilizzato per la lettura del dataset, si consiglia di controllare che il dataset sian presente 
+all'interno della cartella process e inserire all'interno del metodo processed_file_names il nome del dataset da voler 
+utilizzare per allenare la rete.
 """
 
 
@@ -51,14 +57,19 @@ class TraceDataset(InMemoryDataset):
 
 """classe Pytorch per la creazione o lettura del dataset per allenare la rete.
 
-il file che contiene il dataset sarà creato all'interno della cartella process, questa cartella viene creata all'interno della cartella dataset precedentemente creata nella cartell Output.
+il file che contiene il dataset sarà creato all'interno della cartella process, questa cartella viene creata all'interno 
+della cartella dataset precedentemente creata nella cartell Output.
 ./Output/dataset/processed
 
 Il nome del file creato sarà quello passato dal metodo processed_file_names creato in creazione_dataset_next_activity.py
 
-Quando la classe viene richiamata prima controlla se all'interno della cartella process è presente il file con il nome passato nel metodo processed_file_names, se presente andrà a leggere il file, se non presente andrà ad attivare il metodo process per la creazione di un nuovo dataset e gli darà il nome passato tramite il metodo processed_file_names.
+Quando la classe viene richiamata prima controlla se all'interno della cartella process è presente il file con il nome 
+passato nel metodo processed_file_names, se presente andrà a leggere il file, se non presente andrà ad attivare il 
+metodo process per la creazione di un nuovo dataset e gli darà il nome passato tramite il metodo processed_file_names.
 
-In questo script viene utilizzato per la lettura del dataset, si consiglia di controllare che il dataset sia presente all'interno della cartella process e inserire all'interno del metodo processed_file_names il nome del dataset da voler utilizzare per allenare la rete.
+In questo script viene utilizzato per la lettura del dataset, si consiglia di controllare che il dataset sia presente 
+all'interno della cartella process e inserire all'interno del metodo processed_file_names il nome del dataset da voler 
+utilizzare per allenare la rete.
 
 Il nome del file è preimpostato  a 'complete'
 
