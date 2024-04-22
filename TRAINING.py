@@ -216,8 +216,8 @@ def split_target(G, per):
 
 
 def print_confusion_matrix_file(cmt, epoch, keyword, combination_folder):
-    torch.save(cmt, join(combination_folder, 'cm_epoch', f'cm_{keyword}_{epoch}.pt'))
-    output = open(join(combination_folder, 'cm_epoch', f'cm_{keyword}_{epoch}.txt'), "w")
+    torch.save(cmt, join(combination_folder, f'cm_{keyword}_{epoch}.pt'))
+    output = open(join(combination_folder, f'cm_{keyword}_{epoch}.txt'), "w")
     for x in cmt:
         for y in x:
             output.write(str(y.item()))
@@ -357,7 +357,7 @@ def test_net(loader, results_df, epoch, k, combination_folder):
     file_content += f'\n\nOccurrences Count:\n{occurrences_count.to_string()}'
 
     # Salva il contenuto nel file di testo
-    with open(join(combination_folder, 'Prefix_score', f'{epoch}_Prefix_score.txt'), 'w') as file:
+    with open(join(combination_folder, 'prefix_score', f'{epoch}_Prefix_score.txt'), 'w') as file:
         file.write(file_content)
 
     # Grafico
@@ -390,7 +390,7 @@ def test_net(loader, results_df, epoch, k, combination_folder):
     plt.gca().set_facecolor('white')
     plt.grid(False)
 
-    plt.savefig(join(combination_folder, 'AndamentoF1Score', f'{epoch}_PrefixF1Score.png'))  # salva l'immagini della matrice di confusione
+    plt.savefig(join(combination_folder, 'andamento_F1_score', f'{epoch}_PrefixF1Score.png'))  # salva l'immagini della matrice di confusione
 
     stacked = torch.stack((ystack_std, all_preds),
                           dim=1)  # creo un vettore di coppie contenenti la predizione della rete e il valore esatto
@@ -517,8 +517,8 @@ def run_epochs(num_layers, hidden, k, lr, combination_folder):
         accTr.append(train_acc / len(train_loader.dataset))
         accTe.append(test_acc / len(test_loader.dataset))
 
-        print_confusion_matrix_file(cmt_train, epoch, 'train', combination_folder)  # salva le matrici di confusione
-        print_confusion_matrix_file(cmt_test, epoch, 'test', combination_folder)
+        print_confusion_matrix_file(cmt_train, epoch, 'train', join(combination_folder, 'cm_epoch'))  # salva le matrici di confusione
+        print_confusion_matrix_file(cmt_test, epoch, 'test', join(combination_folder, 'cm_epoch'))
         # plt.figure(figsize=(15,15))       #crea la figura in cui salvare la matrice di confusione nel formato png
         plot_confusion_matrix(cmt_test, "Confusion matrix TEST epoch : " + str(epoch))
         # modificare con il path dove si vogliono salvare le immagini della matrice di confusione
@@ -603,7 +603,14 @@ def run_epochs(num_layers, hidden, k, lr, combination_folder):
         # early stopping
         if triggertimes >= patience:
             print('Early stopping!\nBest loss = {}'.format(best_loss_test))
+            print_confusion_matrix_file(cmt_test, epoch, 'test', join(combination_folder, 'final_score'))
+            print_confusion_matrix_file(cmt_train, epoch, 'train', join(combination_folder, 'final_score'))
+            break
 
+        if epoch == delta_epoch-1:
+            print('Training stopping, ' + str(delta_epoch) + ' epochs reached!\nBest loss = {}'.format(best_loss_test))
+            print_confusion_matrix_file(cmt_test, epoch, 'test', join(combination_folder, 'final_score'))
+            print_confusion_matrix_file(cmt_train, epoch, 'train', join(combination_folder, 'final_score'))
             break
 
         plt.close('all')
@@ -737,11 +744,11 @@ else:
                 makedirs(combination_folder, exist_ok=True)
                 makedirs(join(combination_folder, 'best_test'), exist_ok=True)
                 makedirs(join(combination_folder, 'best_train'), exist_ok=True)
-                makedirs(join(combination_folder, 'AndamentoF1Score'), exist_ok=True)
-                makedirs(join(combination_folder, 'Prefix_score'), exist_ok=True)
+                makedirs(join(combination_folder, 'andamento_F1_score'), exist_ok=True)
+                makedirs(join(combination_folder, 'prefix_score'), exist_ok=True)
                 makedirs(join(combination_folder, 'cm_epoch'), exist_ok=True)
                 makedirs(join(combination_folder, 'log'), exist_ok=True)
-
+                makedirs(join(combination_folder, 'final_score'), exist_ok=True)
 
                 # makedirs(join(combination_folder, 'Immagini', 'cm_epoch'), exist_ok=True)
                 # makedirs(join(combination_folder, 'Immagini', 'best_train'), exist_ok=True)
