@@ -66,14 +66,6 @@ def clean_directories():
             rmtree(PREFIX_PATH)
         makedirs(PREFIX_PATH)
 
-    bla = [LOG_PATH, CSV_PATH, IMG_PATH, IMMAGINI_PATH, IMG_CM_EPOCH,
-           IMG_BEST_TEST_PATH, IMG_BEST_TRAIN_PATH, CM_PATH, CHECKPOINT_RETE_PATH,
-           CK_BEST_TRAIN_PATH, CK_BEST_TEST_PATH, F1_SCORE_PATH]
-    for complete_path in bla:
-        if exists(complete_path):
-            rmtree(complete_path)
-        makedirs(complete_path)
-
 
 def clean_output_directories():
     output_to_clean = ['dataset']
@@ -101,6 +93,16 @@ def clean_output_directories():
         makedirs(PREFIX_PATH)
 
 
+def clean_training_directories():
+    paths = [LOG_PATH, CSV_PATH, IMG_PATH, IMMAGINI_PATH, IMG_CM_EPOCH,
+             IMG_BEST_TEST_PATH, IMG_BEST_TRAIN_PATH, CM_PATH, CHECKPOINT_RETE_PATH,
+             CK_BEST_TRAIN_PATH, CK_BEST_TEST_PATH, F1_SCORE_PATH]
+    for complete_path in paths:
+        if exists(complete_path):
+            rmtree(complete_path)
+        makedirs(complete_path)
+
+
 def load():
     parser = ArgumentParser()
 
@@ -108,8 +110,8 @@ def load():
                         default=['bu', 'nrchanges', 'ttmotif', 'plant', 'matgroup', 'polines', 'vendor', 'item'])
     parser.add_argument('--data_dir', default=join(OUTPUT_PATH, 'dataset'))
     parser.add_argument('--csv_name', default=join(INPUT_PATH, 'csv', 'BPI_Challenge_2012.csv'))
-    parser.add_argument('--xes_name',  default=join(INPUT_PATH, 'xes', 'BPI_Challenge_2012.xes'))
-    parser.add_argument('--xes_name_se',  default=join(INPUT_PATH, 'xes', 'BPI_Challenge_2012_correct.xes'))
+    parser.add_argument('--xes_name', default=join(INPUT_PATH, 'xes', 'BPI_Challenge_2012.xes'))
+    parser.add_argument('--xes_name_se', default=join(INPUT_PATH, 'xes', 'BPI_Challenge_2012_correct.xes'))
     parser.add_argument('--net_name', default=join(OUTPUT_PATH, 'petri_nets'))
     parser.add_argument('--checkpoint_dir', default=join(OUTPUT_PATH, 'checkpoints'))
     parser.add_argument('--dataset', default='p2p')

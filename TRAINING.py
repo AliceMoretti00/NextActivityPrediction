@@ -18,9 +18,10 @@ from os.path import join, isfile, splitext
 from cli_functions import select_dataset_paths, select_range_and_split
 from config import CK_BEST_TRAIN_PATH, OUTPUT_DS_PATH, CM_PATH, \
     CHECKPOINT_RETE_PATH, CSV_PATH, IMG_BEST_TEST_PATH, IMG_BEST_TRAIN_PATH, \
-    LOG_PATH, BASE_PATH, CK_BEST_TEST_PATH, F1_SCORE_PATH
+    LOG_PATH, BASE_PATH, CK_BEST_TEST_PATH, F1_SCORE_PATH, clean_training_directories
 import config
 
+clean_training_directories()
 plt.ioff()
 args = config.load()
 
