@@ -11,13 +11,13 @@ import numpy as np
 import itertools
 from time import time
 import random
-from shutil import copyfile
+from shutil import copyfile, rmtree
 from os import makedirs
-from os.path import join, isfile, splitext
+from os.path import join, isfile, splitext, exists
 
 from cli_functions import select_dataset_paths, select_range_and_split
-from config import CK_BEST_TRAIN_PATH, OUTPUT_DS_PATH, CM_PATH, \
-    CHECKPOINT_RETE_PATH, CSV_PATH, LOG_PATH, BASE_PATH, CK_BEST_TEST_PATH, F1_SCORE_PATH, clean_training_directories
+from config import CK_BEST_TRAIN_PATH, OUTPUT_DS_PATH, \
+    CHECKPOINT_RETE_PATH, BASE_PATH, CK_BEST_TEST_PATH, clean_training_directories
 import config
 
 clean_training_directories()
@@ -215,9 +215,9 @@ def split_target(G, per):
 """metodi per salvare le matrici di confusione, salva sia nel formato di tensore pytorch sia su file in formato txt"""
 
 
-def print_confusion_matrix_file(cmt, epoch, keyword):
-    torch.save(cmt, join(CM_PATH, f'cm_{keyword}_{epoch}.pt'))
-    output = open(join(CM_PATH, f'cm_{keyword}_{epoch}.txt'), "w")
+def print_confusion_matrix_file(cmt, epoch, keyword, combination_folder):
+    torch.save(cmt, join(combination_folder, 'cm_epoch', f'cm_{keyword}_{epoch}.pt'))
+    output = open(join(combination_folder, 'cm_epoch', f'cm_{keyword}_{epoch}.txt'), "w")
     for x in cmt:
         for y in x:
             output.write(str(y.item()))
@@ -313,7 +313,7 @@ def train_net(k):  # funzione di addestramento della rete
 
 
 # funzione per il test della rete
-def test_net(loader, results_df, epoch, k):
+def test_net(loader, results_df, epoch, k, combination_folder):
     model.train(False)  # passando il false dico al programma di non addestrare il modello
     running_loss = 0.0
     running_corrects = 0
@@ -357,7 +357,7 @@ def test_net(loader, results_df, epoch, k):
     file_content += f'\n\nOccurrences Count:\n{occurrences_count.to_string()}'
 
     # Salva il contenuto nel file di testo
-    with open(join(CSV_PATH, f'{epoch}_CSV.txt'), 'w') as file:
+    with open(join(combination_folder, 'Prefix_score', f'{epoch}_Prefix_score.txt'), 'w') as file:
         file.write(file_content)
 
     # Grafico
@@ -390,7 +390,7 @@ def test_net(loader, results_df, epoch, k):
     plt.gca().set_facecolor('white')
     plt.grid(False)
 
-    plt.savefig(join(F1_SCORE_PATH, f'{epoch}_PrefixF1Score.png'))  # salva l'immagini della matrice di confusione
+    plt.savefig(join(combination_folder, 'AndamentoF1Score', f'{epoch}_PrefixF1Score.png'))  # salva l'immagini della matrice di confusione
 
     stacked = torch.stack((ystack_std, all_preds),
                           dim=1)  # creo un vettore di coppie contenenti la predizione della rete e il valore esatto
@@ -494,7 +494,7 @@ def run_epochs(num_layers, hidden, k, lr, combination_folder):
     best_loss_test = resume_best_loss_test(join(CK_BEST_TEST_PATH, 'best_model.pth.tar'))
     best_loss_train = resume_best_loss_train(join(CK_BEST_TRAIN_PATH, 'best_model.pth.tar'))
 
-    file_log = open(join(LOG_PATH,
+    file_log = open(join(combination_folder, 'log',
                          f'log_split_target_{percentuale_split}_{100 - percentuale_split}_epoch_{start_epoch}_{start_epoch + delta_epoch - 1}.txt'),
                     'w')
     global model
@@ -508,7 +508,7 @@ def run_epochs(num_layers, hidden, k, lr, combination_folder):
         train_loss, train_acc, cmt_train = train_net(k=k)  # avvia il training della rete
 
         # Path dove salvo le metriche di valutazione F1 in funzione dei prefissi
-        test_loss, test_acc, cmt_test = test_net(test_loader, results_df, epoch, k)
+        test_loss, test_acc, cmt_test = test_net(test_loader, results_df, epoch, k, combination_folder)
         # avvia il test della rete
 
         lossTr.append(train_loss / len(train_loader.dataset))
@@ -517,19 +517,19 @@ def run_epochs(num_layers, hidden, k, lr, combination_folder):
         accTr.append(train_acc / len(train_loader.dataset))
         accTe.append(test_acc / len(test_loader.dataset))
 
-        print_confusion_matrix_file(cmt_train, epoch, 'train')  # salva le matrici di confusione
-        print_confusion_matrix_file(cmt_test, epoch, 'test')
+        print_confusion_matrix_file(cmt_train, epoch, 'train', combination_folder)  # salva le matrici di confusione
+        print_confusion_matrix_file(cmt_test, epoch, 'test', combination_folder)
         # plt.figure(figsize=(15,15))       #crea la figura in cui salvare la matrice di confusione nel formato png
         plot_confusion_matrix(cmt_test, "Confusion matrix TEST epoch : " + str(epoch))
         # modificare con il path dove si vogliono salvare le immagini della matrice di confusione
 
-        plt.savefig(join(CM_PATH, f'confusion_matrix_split_target_{percentuale_split}_{100 - percentuale_split}_epoch_{epoch}test.png'))
+        plt.savefig(join(combination_folder, 'cm_epoch',  f'confusion_matrix_split_target_{percentuale_split}_{100 - percentuale_split}_epoch_{epoch}test.png'))
         # salva l'immagini della matrice di confusione
         plt.figure(figsize=(15, 15))
         plot_confusion_matrix(cmt_train, "Confusion matrix TRAIN epoch : " + str(epoch))
         # modificare con il path dove si vogliono salvare le immagini della matrice di confusione
 
-        plt.savefig(join(CM_PATH, f'confusion_matrix_split_target_{percentuale_split}_{100 - percentuale_split}_epoch_{epoch}train.png'))
+        plt.savefig(join(combination_folder, 'cm_epoch', f'confusion_matrix_split_target_{percentuale_split}_{100 - percentuale_split}_epoch_{epoch}train.png'))
         # print(f'Epoch: {epoch:03d}, Train Acc: {(train_acc/len(train_loader.dataset)):.4f},
         # Test Acc: {(test_acc/len(test_loader.dataset)):.4f}, Train Loss: {(train_loss/len(train_loader.dataset)):.4f},
         # Test Loss: {(test_loss/len(test_loader.dataset)):.4f} ')
@@ -728,10 +728,21 @@ else:
                     continue
 
                 # Creazione di una cartella unica per questa combinazione
-                combination_folder = join(BASE_PATH, f"results_k{k}_layers{num_layers}_lr{lr}")
+                combination_folder = f"results_k{k}_layers{num_layers}_lr{lr}"
+
+                if exists(combination_folder):
+                    rmtree(combination_folder)
+                makedirs(combination_folder)
+
                 makedirs(combination_folder, exist_ok=True)
                 makedirs(join(combination_folder, 'best_test'), exist_ok=True)
                 makedirs(join(combination_folder, 'best_train'), exist_ok=True)
+                makedirs(join(combination_folder, 'AndamentoF1Score'), exist_ok=True)
+                makedirs(join(combination_folder, 'Prefix_score'), exist_ok=True)
+                makedirs(join(combination_folder, 'cm_epoch'), exist_ok=True)
+                makedirs(join(combination_folder, 'log'), exist_ok=True)
+
+
                 # makedirs(join(combination_folder, 'Immagini', 'cm_epoch'), exist_ok=True)
                 # makedirs(join(combination_folder, 'Immagini', 'best_train'), exist_ok=True)
                 # makedirs(join(combination_folder, 'Immagini', 'best_test'), exist_ok=True)

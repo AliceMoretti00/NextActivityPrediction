@@ -17,14 +17,9 @@ OUTPUT_PN_PATH = join(OUTPUT_PATH, 'petri_nets')
 PREFIX_PATH = join(BASE_PATH, 'Prefix')
 
 # to create
-LOG_PATH = join(BASE_PATH, 'log')
-CSV_PATH = join(BASE_PATH, 'Csv')
-IMG_PATH = join(BASE_PATH, 'IMG')
-CM_PATH = join(IMG_PATH, 'cm_epoch')
 CHECKPOINT_RETE_PATH = join(BASE_PATH, 'checkpoint_rete')
 CK_BEST_TRAIN_PATH = join(CHECKPOINT_RETE_PATH, 'best_train')
 CK_BEST_TEST_PATH = join(CHECKPOINT_RETE_PATH, 'best_test')
-F1_SCORE_PATH = join(BASE_PATH, 'AndamentoF1Score')
 
 
 # pulizia delle directory
@@ -90,8 +85,7 @@ def clean_output_directories():
 
 
 def clean_training_directories():
-    paths = [LOG_PATH, CSV_PATH, IMG_PATH, CM_PATH, CHECKPOINT_RETE_PATH,
-             CK_BEST_TRAIN_PATH, CK_BEST_TEST_PATH, F1_SCORE_PATH]
+    paths = [CHECKPOINT_RETE_PATH, CK_BEST_TRAIN_PATH, CK_BEST_TEST_PATH]
     for complete_path in paths:
         if exists(complete_path):
             rmtree(complete_path)
