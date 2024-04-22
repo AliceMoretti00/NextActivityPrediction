@@ -1,5 +1,6 @@
 import sys
 import config
+
 args = config.load()
 
 
@@ -12,11 +13,15 @@ def select_range_and_split(prefix_occurrences):
         print(f"Num. prefix : {k}, Occurences: {v}")
 
     try:
-        min_prefissi_selezionato = int(input(f"Inserisci il valore minimo del range di prefissi (min: {min_prefissi},"
-                                             f"max: {max_prefissi}): "))
-        max_prefissi_selezionato = int(input(f"Inserisci il valore massimo del range di prefissi (min: {min_prefissi},"
-                                             f"max: {max_prefissi}): "))
-        percentuale_split = int(input("Inserisci la percentuale di split train/test: "))
+        # min_prefissi_selezionato = int(input(f"Inserisci il valore minimo del range di prefissi (min: {min_prefissi},"
+        # f"max: {max_prefissi}): "))
+        # max_prefissi_selezionato = int(input(f"Inserisci il valore massimo del range di prefissi (min:
+        # {min_prefissi},"f"max: {max_prefissi}): "))
+        min_prefissi_selezionato = min_prefissi
+        max_prefissi_selezionato = max_prefissi
+
+        # percentuale_split = int(input("Inserisci la percentuale di split train/test: "))
+        percentuale_split = 67
         search_grid = input("Vuoi attivare la Search Grid? (Y/N): ").strip().lower() == "y"
     except (Exception,):
         print('Valori non inseriti.')
@@ -26,9 +31,9 @@ def select_range_and_split(prefix_occurrences):
         print("Il valore minimo del range di prefissi non può essere maggiore del massimo.")
         sys.exit(1)
 
-    print(f"Range di prefissi selezionato: {min_prefissi_selezionato} a {max_prefissi_selezionato}")
-    print(f"Percentuale di split train/test: {percentuale_split}%")
-    print(f"Search Grid: {'Attivata' if search_grid else 'Disattivata'}")
+    # print(f"Range di prefissi selezionato: {min_prefissi_selezionato} a {max_prefissi_selezionato}")
+    # print(f"Percentuale di split train/test: {percentuale_split}%")
+    # print(f"Search Grid: {'Attivata' if search_grid else 'Disattivata'}")
 
     return min_prefissi_selezionato, max_prefissi_selezionato, percentuale_split, search_grid
 
@@ -75,18 +80,18 @@ def select_features(colonne_da_sel, colonne_eliminate, parametro_bool):
 
 
 def select_dataset_paths():
-    dataset_path = input("Inserisci il percorso del file del dataset pre-elaborato (complete_par.pt): ")
-    target_par = input("Inserisci il percorso del file target_par.txt: ")
-    target_std = input("Inserisci il percorso del file target_std.txt: ")
+    # dataset_path = input("Inserisci il percorso del file del dataset pre-elaborato (complete_par.pt): ")
+    # target_par = input("Inserisci il percorso del file target_par.txt: ")
+    # target_std = input("Inserisci il percorso del file target_std.txt: ")
 
-    if target_par == "":
-        target_par = args.target_par
+    # if target_par == "":
+    target_par = args.target_par
 
-    if target_std == "":
-        target_std = args.target_std
+    # if target_std == "":
+    target_std = args.target_std
 
-    if dataset_path == "":
-        dataset_path = args.complete_par
+    # if dataset_path == "":
+    dataset_path = args.complete_par
 
     print(f"Percorso dataset selezionato: {dataset_path}")
     print(f"Percorso file target_par.txt selezionato: {target_par}")
