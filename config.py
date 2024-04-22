@@ -20,10 +20,6 @@ PREFIX_PATH = join(BASE_PATH, 'Prefix')
 LOG_PATH = join(BASE_PATH, 'log')
 CSV_PATH = join(BASE_PATH, 'Csv')
 IMG_PATH = join(BASE_PATH, 'IMG')
-IMMAGINI_PATH = join(BASE_PATH, 'Immagini')
-IMG_CM_EPOCH = join(IMMAGINI_PATH, 'cm_epoch')
-IMG_BEST_TEST_PATH = join(IMMAGINI_PATH, 'best_test')
-IMG_BEST_TRAIN_PATH = join(IMMAGINI_PATH, 'best_train')
 CM_PATH = join(IMG_PATH, 'cm_epoch')
 CHECKPOINT_RETE_PATH = join(BASE_PATH, 'checkpoint_rete')
 CK_BEST_TRAIN_PATH = join(CHECKPOINT_RETE_PATH, 'best_train')
@@ -94,8 +90,7 @@ def clean_output_directories():
 
 
 def clean_training_directories():
-    paths = [LOG_PATH, CSV_PATH, IMG_PATH, IMMAGINI_PATH, IMG_CM_EPOCH,
-             IMG_BEST_TEST_PATH, IMG_BEST_TRAIN_PATH, CM_PATH, CHECKPOINT_RETE_PATH,
+    paths = [LOG_PATH, CSV_PATH, IMG_PATH, CM_PATH, CHECKPOINT_RETE_PATH,
              CK_BEST_TRAIN_PATH, CK_BEST_TEST_PATH, F1_SCORE_PATH]
     for complete_path in paths:
         if exists(complete_path):

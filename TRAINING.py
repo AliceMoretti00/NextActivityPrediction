@@ -17,8 +17,7 @@ from os.path import join, isfile, splitext
 
 from cli_functions import select_dataset_paths, select_range_and_split
 from config import CK_BEST_TRAIN_PATH, OUTPUT_DS_PATH, CM_PATH, \
-    CHECKPOINT_RETE_PATH, CSV_PATH, IMG_BEST_TEST_PATH, IMG_BEST_TRAIN_PATH, \
-    LOG_PATH, BASE_PATH, CK_BEST_TEST_PATH, F1_SCORE_PATH, clean_training_directories
+    CHECKPOINT_RETE_PATH, CSV_PATH, LOG_PATH, BASE_PATH, CK_BEST_TEST_PATH, F1_SCORE_PATH, clean_training_directories
 import config
 
 clean_training_directories()
@@ -478,7 +477,7 @@ def resume_best_loss_train(path_to_checkpoint):
         return best_loss_train
 
 
-def run_epochs(num_layers, hidden, k, lr):
+def run_epochs(num_layers, hidden, k, lr, combination_folder):
     # apre un file per il salvataggio del log della rete, per ogni epoca salva i valori di
     # accuracy edi loss per il train e il test
     # Stampa le informazioni in forma tabellare
@@ -553,10 +552,10 @@ def run_epochs(num_layers, hidden, k, lr):
             plt.figure(figsize=(15, 15))
             plot_confusion_matrix(cmt_test, "Confusion matrix BEST TEST epoch : " + str(epoch))
             # modificare con il path dove si vogliono salvare le immagini della matrice di confusione
-            plt.savefig(join(IMG_BEST_TEST_PATH, 'test.png'))
+            plt.savefig(join(combination_folder, 'best_test/test.png'))
             plt.figure(figsize=(15, 15))
             plot_confusion_matrix(cmt_train, "Confusion matrix train epoch: " + str(epoch))
-            plt.savefig(join(IMG_BEST_TEST_PATH, 'train.png'))
+            plt.savefig(join(combination_folder, 'best_test/train.png'))
             state = {'epoch': epoch, 'loss': test_loss, 'state_dict': model.state_dict(),
                      'opt': optimizer.state_dict()}
             torch.save(state, join(CK_BEST_TEST_PATH, 'best_model.pth.tar'))  # salva info utili sulla best epoch
@@ -584,10 +583,10 @@ def run_epochs(num_layers, hidden, k, lr):
             plt.figure(figsize=(15, 15))
             plot_confusion_matrix(cmt_test, "Confusion matrix test epoch : " + str(epoch))
             # modificare con il path dove si vogliono salvare le immagini della matrice di confusione
-            plt.savefig(join(IMG_BEST_TRAIN_PATH, 'test.png'))
+            plt.savefig(join(combination_folder, 'best_train/test.png'))
             plt.figure(figsize=(15, 15))
             plot_confusion_matrix(cmt_train, "Confusion matrix BEST TRAIN epoch: " + str(epoch))
-            plt.savefig(join(IMG_BEST_TRAIN_PATH, 'train.png'))
+            plt.savefig(join(combination_folder, 'best_train/train.png'))
             state = {'epoch': epoch, 'loss': train_loss, 'state_dict': model.state_dict(),
                      'opt': optimizer.state_dict()}
             torch.save(state, join(CK_BEST_TRAIN_PATH, 'best_model.pth.tar'))
@@ -604,6 +603,7 @@ def run_epochs(num_layers, hidden, k, lr):
         # early stopping
         if triggertimes >= patience:
             print('Early stopping!\nBest loss = {}'.format(best_loss_test))
+
             break
 
         plt.close('all')
@@ -730,11 +730,13 @@ else:
                 # Creazione di una cartella unica per questa combinazione
                 combination_folder = join(BASE_PATH, f"results_k{k}_layers{num_layers}_lr{lr}")
                 makedirs(combination_folder, exist_ok=True)
-                makedirs(join(combination_folder, 'Immagini', 'cm_epoch'), exist_ok=True)
-                makedirs(join(combination_folder, 'Immagini', 'best_train'), exist_ok=True)
-                makedirs(join(combination_folder, 'Immagini', 'best_test'), exist_ok=True)
                 makedirs(join(combination_folder, 'best_test'), exist_ok=True)
                 makedirs(join(combination_folder, 'best_train'), exist_ok=True)
-                makedirs(join(combination_folder, 'log'), exist_ok=True)
+                # makedirs(join(combination_folder, 'Immagini', 'cm_epoch'), exist_ok=True)
+                # makedirs(join(combination_folder, 'Immagini', 'best_train'), exist_ok=True)
+                # makedirs(join(combination_folder, 'Immagini', 'best_test'), exist_ok=True)
+                # makedirs(join(combination_folder, 'best_test'), exist_ok=True)
+                # makedirs(join(combination_folder, 'best_train'), exist_ok=True)
+                # makedirs(join(combination_folder, 'log'), exist_ok=True)
 
-                run_epochs(num_layers, args.batch_size, k, lr)
+                run_epochs(num_layers, args.batch_size, k, lr, combination_folder)
