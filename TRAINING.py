@@ -25,6 +25,8 @@ clean_training_directories()
 plt.ioff()
 args = config.load()
 
+# log, Csv
+
 
 """classe Pytorch per la creazione o lettura del dataset per allenare la rete.
 
@@ -710,9 +712,13 @@ if not search_grid:
     run_epochs(args.num_layers, args.batch_size, args.k, args.learning_rate)
 else:
     # Definizione dei parametri per la grid search
-    k_values = [3, 5, 7, 30]
-    num_layers_values = [2, 3, 5, 7]
-    lr_values = [1e-2, 1e-3, 1e-4]
+    # k_values = [3, 5, 7, 30]
+    # num_layers_values = [2, 3, 5, 7]
+    # lr_values = [1e-2, 1e-3, 1e-4]
+
+    k_values = [3]
+    num_layers_values = [2]
+    lr_values = [1e-2]
 
     # Ciclo di grid search
     for k in k_values:
