@@ -25,7 +25,6 @@ clean_training_directories()
 plt.ioff()
 args = config.load()
 
-# log, Csv
 
 
 """classe Pytorch per la creazione o lettura del dataset per allenare la rete.
