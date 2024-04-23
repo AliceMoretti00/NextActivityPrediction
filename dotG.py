@@ -699,7 +699,7 @@ def get_g_dataframe(filename=None):
     g_dataframe['resources'] = [[0] * len(unique)] * len(g_dataframe)
     g_dataframe['resources'] = g_dataframe['resources'].astype(object)
 
-    log_prefix = open(join(OUTPUT_DS_PATH, 'prefix_log.txt'), "w")
+    prefix_df = pd.DataFrame(columns=['index', 'timestamp', 'id', 'activity'])
 
     # For every time, takes current activities to get the busy resources
     for i in start_dates:
@@ -713,8 +713,11 @@ def get_g_dataframe(filename=None):
         # create a log file in the format
         # timestamp name_track name_event
         for active_case in range(0, len(finish_time)):
-            log_prefix.write(str(i) + " " + finish_time.iloc[active_case]['name_track'] + " " +
-                             finish_time.iloc[active_case]['name_event'] + "\n")
+            if pd.DataFrame((prefix_df['index'] == finish_time.index[active_case])).values.sum() == 0:
+                s_row = pd.Series([finish_time.index[active_case], str(i),
+                                   finish_time.iloc[active_case]['name_track'],
+                                   finish_time.iloc[active_case]['name_event']], index=prefix_df.columns)
+                prefix_df = prefix_df._append(s_row, ignore_index=True)
 
         for r in res:
             if r in current_dict:
@@ -725,7 +728,8 @@ def get_g_dataframe(filename=None):
         for index in list(finish_time.index):
             g_dataframe.at[index, 'resources'] = [a + b for a, b in zip(g_dataframe.iloc[index]['resources'], features)]
 
-    log_prefix.close()
+    prefix_df = prefix_df.drop(['index'], axis=1)
+    prefix_df.to_csv(join(OUTPUT_DS_PATH, 'prefix_log.csv'), sep=',', header=True, index=False)
 
     for i in range(0, len(g_dataframe['resources'])):
         if sum(g_dataframe.iloc[i]['resources']) != 0:
