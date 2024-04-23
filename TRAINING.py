@@ -212,6 +212,25 @@ def split_target(G, per):
     return train, test
 
 
+def print_final_result(epochs, test_acc, train_acc, test_f1, train_f1, total_time, combination_folder):
+    hours = int(total_time) // 3600
+    minutes = int(total_time % 3600) // 60
+    seconds = int(total_time % 60)
+    res = open(join(combination_folder, 'final_score', 'results.txt'), 'w')
+    res.write('FINAL RESULTS\n')
+    res.write('Test Accuracy: {:.4f}'.format(test_acc) + '\n')
+    res.write('Train Accuracy: {:.4f}'.format(train_acc) + '\n')
+    res.write('Test F1-score: {:.4f}'.format(test_f1) + '\n')
+    res.write('Train F1-score: {:.4f}'.format(train_f1) + '\n\n')
+    if hours > 0:
+        res.write(f'Total time taken: {hours} hours, {minutes} minutes and {seconds} seconds\n')
+    elif hours == 0 and minutes > 0:
+        res.write(f"Total time taken: {minutes} minutes and {seconds} seconds\n")
+    else:
+        res.write(f"Total time taken: {seconds} seconds\n")
+    res.write('Number of epochs: ' + str(epochs) + '\n')
+
+
 """metodi per salvare le matrici di confusione, salva sia nel formato di tensore pytorch sia su file in formato txt"""
 
 
@@ -306,10 +325,11 @@ def train_net(k):  # funzione di addestramento della rete
                           dim=1)  # creo un vettore di coppie contenenti la predizione della rete e il valore esatto
     cmt = torch.zeros(G.num_classes, G.num_classes,
                       dtype=torch.int64)  # inizializzo a zero la matrice in cui salvo la metrice diconfusione
+    f1_all = f1_score(ystack_std, all_preds, average='weighted')
     for p in stacked:  # popolo la matrice di confusione
         tl, pl = p.tolist()
         cmt[int(tl), int(pl)] = cmt[int(tl), int(pl)] + 1
-    return running_loss, running_corrects, cmt
+    return running_loss, running_corrects, f1_all, cmt
 
 
 # funzione per il test della rete
@@ -400,7 +420,7 @@ def test_net(loader, results_df, epoch, k, combination_folder):
         tl, pl = p.tolist()
         cmt[int(tl), int(pl)] = cmt[int(tl), int(pl)] + 1
 
-    return running_loss, running_corrects, cmt
+    return running_loss, running_corrects, f1_all, cmt
 
 
 # funzione che serve per creare l'immagine della matrice di confusione
@@ -505,10 +525,10 @@ def run_epochs(num_layers, hidden, k, lr, combination_folder):
     start_time = time()
 
     for epoch in range(start_epoch, start_epoch + delta_epoch):  # ciclo delle epoche di addestramento
-        train_loss, train_acc, cmt_train = train_net(k=k)  # avvia il training della rete
+        train_loss, train_acc, train_f1, cmt_train = train_net(k=k)  # avvia il training della rete
 
         # Path dove salvo le metriche di valutazione F1 in funzione dei prefissi
-        test_loss, test_acc, cmt_test = test_net(test_loader, results_df, epoch, k, combination_folder)
+        test_loss, test_acc, test_f1, cmt_test = test_net(test_loader, results_df, epoch, k, combination_folder)
         # avvia il test della rete
 
         lossTr.append(train_loss / len(train_loader.dataset))
@@ -602,15 +622,22 @@ def run_epochs(num_layers, hidden, k, lr, combination_folder):
 
         # early stopping
         if triggertimes >= patience:
+            end_time = time()
             print('Early stopping!\nBest loss = {}'.format(best_loss_test))
             print_confusion_matrix_file(cmt_test, epoch, 'test', join(combination_folder, 'final_score'))
             print_confusion_matrix_file(cmt_train, epoch, 'train', join(combination_folder, 'final_score'))
+            print_final_result(epoch, test_acc/len(test_loader.dataset), train_acc/len(train_loader.dataset), test_f1,
+                               train_f1, end_time-start_time, combination_folder)
+
             break
 
         if epoch == delta_epoch-1:
+            end_time = time()
             print('Training stopping, ' + str(delta_epoch) + ' epochs reached!\nBest loss = {}'.format(best_loss_test))
             print_confusion_matrix_file(cmt_test, epoch, 'test', join(combination_folder, 'final_score'))
             print_confusion_matrix_file(cmt_train, epoch, 'train', join(combination_folder, 'final_score'))
+            print_final_result(epoch, test_acc/len(test_loader.dataset), train_acc/len(train_loader.dataset), test_f1,
+                               train_f1, end_time-start_time, combination_folder)
             break
 
         plt.close('all')
