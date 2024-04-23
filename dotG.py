@@ -699,11 +699,14 @@ def get_g_dataframe(filename=None):
     g_dataframe['resources'] = [[0] * len(unique)] * len(g_dataframe)
     g_dataframe['resources'] = g_dataframe['resources'].astype(object)
 
+    count = 0
+    len_start_dates = len(start_dates)
     prefix_df = pd.DataFrame(columns=['index', 'timestamp', 'node_name', 'id', 'activity'])
-
     # For every time, takes current activities to get the busy resources
     for i in start_dates:
+        count = count+1
         # current activity
+        print('dates processed: ' + str(count) + '/' + str(len_start_dates))
         j = g_dataframe[g_dataframe['start'] <= i]
         finish_time = j[j['finish'] >= i]
         res = list(finish_time['org:resource(NaN)'])
