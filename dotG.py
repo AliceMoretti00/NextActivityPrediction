@@ -422,6 +422,32 @@ def get_g_dataframe(filename=None):
     g_dataframe['start'] = df_shift['finish'].copy()
     g_dataframe['start'] = g_dataframe.apply(lambda x: x['finish'] if x['node1'] == 1 else x['start'], axis=1)
 
+    # si prendono le attività parallele
+    g_dataframe['name_track'] = g_dataframe['name_track'].fillna(method='ffill')
+    parallel_df = g_dataframe[g_dataframe['e_v'] == 'e'].groupby(['node1', 'name_track']).filter(lambda x: len(x) > 1)
+
+    for index, row in parallel_df.iterrows():
+        # si prende il vertice corrispondente al nodo di partenza delle attività parallele correnti
+        mask = ((g_dataframe[g_dataframe['e_v'] == 'v']['node1'] == row['node1']) &
+                (g_dataframe[g_dataframe['e_v'] == 'v']['name_track'] == row['name_track']))
+        # si prende il tempo di fine di questo vertice
+        finish_time = g_dataframe[g_dataframe['e_v'] == 'v'].loc[mask, 'finish']
+        # si modifica il tempo di inizio dell'attività parallela con il tempo di fine dell'attività precedente
+        row_index = g_dataframe[(g_dataframe['name_track'] == row['name_track']) &
+                                (g_dataframe['node1'] == row['node2']) & (g_dataframe['e_v'] == 'v')].index
+        g_dataframe.loc[row_index, 'start'] = finish_time.iloc[0]
+
+        # si crea una lista dei nodi di destinazione delle attività parallele correnti
+        node2_name = list(g_dataframe[(g_dataframe['name_track'] == row['name_track']) &
+                                      (g_dataframe['node1'] == row['node2']) & (g_dataframe['e_v'] == 'e')]['node2'])
+        node2_info = g_dataframe[(g_dataframe['name_track'] == row['name_track']) &
+                                 (g_dataframe['node1'].isin(node2_name)) & (g_dataframe['e_v'] == 'v')]
+        # si calcola il tempo di inizio minimo tra i nodi di destinazione identificati
+        min_time = node2_info['start'].min()
+        g_dataframe.loc[row_index, 'finish'] = node2_info[node2_info['start'] == min_time]['start'].iloc[0]
+
+
+
     del [[df, df_shift]]
     gc.collect()
     df, df_shift = pd.DataFrame(), pd.DataFrame()
