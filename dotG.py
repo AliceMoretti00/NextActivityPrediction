@@ -446,8 +446,6 @@ def get_g_dataframe(filename=None):
         min_time = node2_info['start'].min()
         g_dataframe.loc[row_index, 'finish'] = node2_info[node2_info['start'] == min_time]['start'].iloc[0]
 
-
-
     del [[df, df_shift]]
     gc.collect()
     df, df_shift = pd.DataFrame(), pd.DataFrame()
@@ -631,8 +629,8 @@ def get_g_dataframe(filename=None):
     sizes = np.array(g_dataframe.groupby('name_track', sort=False, as_index=False).size()['size'])
     """
 
-    idxss = list(np.where(~g_dataframe['name_track'].isnull()))[
-        0]  # Trova gli indici delle righe in cui la colonna 'name_track' di g_dataframe non è nulla.
+    # Trova gli indici delle righe in cui la colonna 'name_track' di g_dataframe non è nulla.
+    idxss = list(np.where(~g_dataframe['name_track'].isnull()))[0]
 
     """
     Processa e aggiunge colonne selezionate da un dataframe di origine a un dataframe di destinazione,
@@ -727,10 +725,18 @@ def get_g_dataframe(filename=None):
 
     count = 0
     len_start_dates = len(start_dates)
-    prefix_df = pd.DataFrame(columns=['index', 'timestamp', 'node_name', 'id', 'activity'])
+
+    # decommentare il codice per salvare i prefissi attivi sul file prefix_log.csv
+    # prefix_df = pd.DataFrame(columns=['index', 'timestamp', 'node_name', 'id', 'activity'])
+    prefix_df = g_dataframe[g_dataframe['e_v'] == 'v'][
+        ['node1', 'name_event', 'name_track', 'start', 'finish', 'org:resource(NaN)']].rename(
+        columns={'node1': 'activity_id', 'name_event': 'event_name',
+                 'name_track': 'track_id', 'org:resource(NaN)': 'resource'})
+    prefix_df['activity_id'] = prefix_df['activity_id'].astype(int)
+
     # For every time, takes current activities to get the busy resources
     for i in start_dates:
-        count = count+1
+        count = count + 1
         # current activity
         print('dates processed: ' + str(count) + '/' + str(len_start_dates))
         j = g_dataframe[g_dataframe['start'] <= i]
@@ -741,6 +747,8 @@ def get_g_dataframe(filename=None):
 
         # create a log file in the format
         # timestamp name_track name_event
+        # decommentare il codice per salvare i prefissi attivi sul file prefix_log.csv
+        """
         for active_case in range(0, len(finish_time)):
             if pd.DataFrame((prefix_df['index'] == finish_time.index[active_case])).values.sum() == 0:
                 s_row = pd.Series([finish_time.index[active_case], str(i),
@@ -748,6 +756,7 @@ def get_g_dataframe(filename=None):
                                    finish_time.iloc[active_case]['name_track'],
                                    finish_time.iloc[active_case]['name_event']], index=prefix_df.columns)
                 prefix_df = prefix_df._append(s_row, ignore_index=True)
+        """
 
         for r in res:
             if r in current_dict:
@@ -758,8 +767,13 @@ def get_g_dataframe(filename=None):
         for index in list(finish_time.index):
             g_dataframe.at[index, 'resources'] = [a + b for a, b in zip(g_dataframe.iloc[index]['resources'], features)]
 
+    # decommentare il codice per salvare i prefissi attivi sul file prefix_log.csv
+    """
     prefix_df = prefix_df.drop(['index'], axis=1)
     prefix_df.to_csv(join(OUTPUT_DS_PATH, 'prefix_log.csv'), sep=',', header=False, index=False)
+    """
+    prefix_df.to_csv(join(OUTPUT_DS_PATH, 'prefix_log.csv'), sep=',', header=False, index=False)
+
 
     for i in range(0, len(g_dataframe['resources'])):
         if sum(g_dataframe.iloc[i]['resources']) != 0:
