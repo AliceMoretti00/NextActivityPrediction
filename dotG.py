@@ -672,10 +672,9 @@ def get_g_dataframe(filename=None):
         print_file.write(f'Aggiungi {i} a g_dataframe...\n')
         print_file.flush()
 
-        for idx, element in zip(idxss, targetframe[i]):
-            if str(element) == 'nan':
-                element = 'No_resource'
-            g_dataframe.loc[idx, str(i)] = element
+        targetframe['org:resource(NaN)'] = targetframe['org:resource(NaN)'].fillna('No_resource')
+        g_dataframe.loc[g_dataframe['e_v'] == 'v', 'org:resource(NaN)'] = (targetframe['org:resource(NaN)'].values)
+
 
         # If you want to fill the rest of the DataFrame with NaNs in the 'ciao' column
 
